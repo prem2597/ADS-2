@@ -14,6 +14,7 @@ import java.util.Map;
  * reference GeeksforGeeks for parsing.
  */
 public final class WordNet {
+    // Constructor.
     private WordNet() {
     }
     /**
@@ -26,6 +27,13 @@ public final class WordNet {
      */
     private static Map<String, List<String>> map =
     new HashMap<String, List<String>>();
+    /**
+     * This method will take the Synsets file as the input and will parse
+     * the data. This method will also store all the synsets.
+     * @param filename Synsets file location.
+     * @return return string array.
+     * @throws IOException Exception handling.
+     */
     private static String[] parseSynsets(final String filename)
     throws IOException {
         // String[] synsetsArray = {};
@@ -47,7 +55,12 @@ public final class WordNet {
         bufRead.close();
         return null;
     }
-
+    /**
+     * This method will parse the data of the hypernyms and stores its values.
+     * @param filename hypernyms file location.
+     * @return returns String array.
+     * @throws IOException Exception handling cases.
+     */
     private static String[] parseHypernyms(final String filename)
     throws IOException {
         FileReader data = new FileReader(filename);
