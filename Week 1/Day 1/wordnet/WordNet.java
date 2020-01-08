@@ -16,7 +16,7 @@ import java.util.Map;
 public final class WordNet {
     // Constructor.
     private WordNet(final String filename1,
-    final String filename2) throws IOException {
+    final String filename2) {
         parseSynsets(filename1);
         parseHypernyms(filename2);
     }
@@ -37,8 +37,7 @@ public final class WordNet {
      * @return return string array.
      * @throws IOException Exception handling.
      */
-    private static String[] parseSynsets(final String filename)
-    throws IOException {
+    private String[] parseSynsets(final String filename) {
         // String[] synsetsArray = {};
         // int k = synsetsArray.length;
         try {
@@ -68,8 +67,7 @@ public final class WordNet {
      * @return returns String array.
      * @throws IOException Exception handling cases.
      */
-    private static String[] parseHypernyms(final String filename)
-    throws IOException {
+    private String[] parseHypernyms(final String filename) {
         try {
             FileReader data = new FileReader(filename);
             BufferedReader bufRead = new BufferedReader(data);
