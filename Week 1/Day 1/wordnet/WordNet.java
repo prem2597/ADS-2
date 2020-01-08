@@ -11,6 +11,7 @@ import java.util.Map;
  * Geeks.
  *
  * @author PREM
+ * @reference GeeksforGeeks for parsing.
  */
 public final class WordNet {
     private WordNet() {
