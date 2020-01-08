@@ -15,7 +15,10 @@ import java.util.Map;
  */
 public final class WordNet {
     // Constructor.
-    private WordNet() {
+    private WordNet(final String filename1,
+    final String filename2) throws IOException {
+        parseSynsets(filename1);
+        parseHypernyms(filename2);
     }
     /**
      * Here we are writing the code to store the data in hash map.
@@ -38,21 +41,25 @@ public final class WordNet {
     throws IOException {
         // String[] synsetsArray = {};
         // int k = synsetsArray.length;
-        FileReader data = new FileReader(filename);
-        BufferedReader bufRead = new BufferedReader(data);
-        String myLine = null;
-        while ((myLine = bufRead.readLine()) != null) {
-            String[] array1 = myLine.split(",");
-            // String[] array2 = array1[1].split(" ");
-            // for (int i = 0; i < array1.length; i++) {
-            // System.out.println(array1[i]);
-            // System.out.println(array1[i+1]);
-            // }
-            System.out.println(array1[0]);
-            System.out.println(array1[1]);
-            synsetdata.put(array1[0], array1[1]);
+        try {
+            FileReader data = new FileReader(filename);
+            BufferedReader bufRead = new BufferedReader(data);
+            String myLine = null;
+            while ((myLine = bufRead.readLine()) != null) {
+                String[] array1 = myLine.split(",");
+                // String[] array2 = array1[1].split(" ");
+                // for (int i = 0; i < array1.length; i++) {
+                // System.out.println(array1[i]);
+                // System.out.println(array1[i+1]);
+                // }
+                System.out.println(array1[0]);
+                System.out.println(array1[1]);
+                synsetdata.put(array1[0], array1[1]);
+            }
+            bufRead.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        bufRead.close();
         return null;
     }
     /**
@@ -63,25 +70,29 @@ public final class WordNet {
      */
     private static String[] parseHypernyms(final String filename)
     throws IOException {
-        FileReader data = new FileReader(filename);
-        BufferedReader bufRead = new BufferedReader(data);
-        String myLine = null;
-        while ((myLine = bufRead.readLine()) != null) {
-            String[] array1 = myLine.split(",");
-            // String[] array2 = array1[1].split(" ");
-            for (int i = 0; i < array1.length; i++) {
-                System.out.println(array1[i]);
+        try {
+            FileReader data = new FileReader(filename);
+            BufferedReader bufRead = new BufferedReader(data);
+            String myLine = null;
+            while ((myLine = bufRead.readLine()) != null) {
+                String[] array1 = myLine.split(",");
+                // String[] array2 = array1[1].split(" ");
+                for (int i = 0; i < array1.length; i++) {
+                    System.out.println(array1[i]);
+                }
+                List<String> listdata = new ArrayList<String>();
+                for (int i = 1; i < array1.length; i++) {
+                    // System.out.println(array1[i]);
+                    listdata.add(array1[i]);
+                }
+                // valSetOne.add("Apple");
+                // valSetOne.add("Aeroplane");
+                map.put(array1[0], listdata);
             }
-            List<String> listdata = new ArrayList<String>();
-            for (int i = 1; i < array1.length; i++) {
-                // System.out.println(array1[i]);
-                listdata.add(array1[i]);
-            }
-            // valSetOne.add("Apple");
-            // valSetOne.add("Aeroplane");
-            map.put(array1[0], listdata);
+            bufRead.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        bufRead.close();
         return null;
     }
     /**
@@ -95,7 +106,8 @@ public final class WordNet {
         "/home/prem/Documents/ADS-2_2019501109/Week 1/Day 1/synsets.txt";
         String parseHypernyms =
         "/home/prem/Documents/ADS-2_2019501109/Week 1/Day 1/hypernyms.txt";
-        parseSynsets(parseSynsets);
-        parseHypernyms(parseHypernyms);
+        // parseSynsets(parseSynsets);
+        // parseHypernyms(parseHypernyms);
+        new WordNet(parseSynsets, parseHypernyms);
     }
 }
