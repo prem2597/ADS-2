@@ -5,7 +5,7 @@ import java.util.HashMap;
  * @author PREM
  */
 public class Digraph {
-    Digraph(int V) {
+    Digraph(final int V) {
         map = new HashMap<Integer, ArrayList<Integer>>(V);
     }
     /**
@@ -39,12 +39,19 @@ public class Digraph {
         x.add(w);
         map.put(v, x);
     }
-
+    /**
+     * To return the size.
+     * @return size.
+     */
     public int V() {
         return map.size();
     }
-
-    public Iterable<Integer> adj(int v) {
+    /**
+     * To iterate the loop.
+     * @param v size
+     * @return iterator.
+     */
+    public Iterable<Integer> adj(final int v) {
         if (v < 0) {
             throw new IllegalArgumentException(" Size should"
              + " be greater than zero");
