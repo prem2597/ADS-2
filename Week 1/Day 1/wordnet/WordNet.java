@@ -14,11 +14,12 @@ import java.util.Map;
  * reference GeeksforGeeks for parsing.
  */
 public final class WordNet {
+    Digraph obj = new Digraph(5);
     // Constructor.
     private WordNet(final String filename1,
     final String filename2) {
-        parseSynsets(filename1);
-        parseHypernyms(filename2);
+        synsetdata = parseSynsets(filename1);
+        map = parseHypernyms(filename2);
     }
     /**
      * Here we are writing the code to store the data in hash map.
@@ -28,16 +29,17 @@ public final class WordNet {
      * Here we are writing the code to store the data in such a way
      * that one key will have multiple values in it.
      */
-    private static Map<String, List<String>> map =
-    new HashMap<String, List<String>>();
+    private Map<String, List<String>> map = new HashMap<String, List<String>>();
+
     /**
-     * This method will take the Synsets file as the input and will parse
-     * the data. This method will also store all the synsets.
+     * This method will take the Synsets file as the input and will parse the data.
+     * This method will also store all the synsets.
+     * 
      * @param filename Synsets file location.
      * @return return string array.
      * @throws IOException Exception handling.
      */
-    private String[] parseSynsets(final String filename) {
+    private HashMap<String, String> parseSynsets(final String filename) {
         // String[] synsetsArray = {};
         // int k = synsetsArray.length;
         try {
@@ -59,15 +61,17 @@ public final class WordNet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return synsetdata;
     }
+
     /**
      * This method will parse the data of the hypernyms and stores its values.
+     * 
      * @param filename hypernyms file location.
      * @return returns String array.
      * @throws IOException Exception handling cases.
      */
-    private String[] parseHypernyms(final String filename) {
+    private Map<String, List<String>> parseHypernyms(final String filename) {
         try {
             FileReader data = new FileReader(filename);
             BufferedReader bufRead = new BufferedReader(data);
@@ -88,24 +92,33 @@ public final class WordNet {
                 map.put(array1[0], listdata);
             }
             bufRead.close();
+            // System.out.println(map(25));
+            // for (int j = 0; j <= 253; j++) {
+            // System.out.println(map.get("166"));
+            // }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return map;
     }
+
     /**
-     * The main method is used to call the synsets and
-     * hypernyms and parse the data.
+     * The main method is used to call the synsets and hypernyms and parse the data.
+     * 
      * @param args String arguments
      * @throws IOException Exception handling
      */
     public static void main(final String[] args) throws IOException {
-        String parseSynsets =
-        "/home/prem/Documents/ADS-2_2019501109/Week 1/Day 1/synsets.txt";
-        String parseHypernyms =
-        "/home/prem/Documents/ADS-2_2019501109/Week 1/Day 1/hypernyms.txt";
+        String parseSynsets = "/home/prem/Documents/ADS-2_2019501109/Week 1/Day 1/synsets.txt";
+        String parseHypernyms = "/home/prem/Documents/ADS-2_2019501109/Week 1/Day 1/hypernyms.txt";
         // parseSynsets(parseSynsets);
         // parseHypernyms(parseHypernyms);
-        new WordNet(parseSynsets, parseHypernyms);
+        WordNet a = new WordNet(parseSynsets, parseHypernyms);
+        for (Map.Entry<String, List<String>> entry : a.map.entrySet()) {
+            for (int i = 0; i < entry.getValue().size(); i++) {
+                a.obj.addEdge(Integer.parseInt(entry.getKey()),
+                Integer.parseInt(entry.getValue().get(i)));
+            }
+        }
     }
 }
