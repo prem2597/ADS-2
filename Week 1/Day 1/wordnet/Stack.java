@@ -1,16 +1,20 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 /**
- *  The {@code Stack} class represents a last-in-first-out (LIFO) stack of generic items.
- *  It supports the usual <em>push</em> and <em>pop</em> operations, along with methods
- *  for peeking at the top item, testing if the stack is empty, and iterating through
+ *  The {@code Stack} class represents
+ *  a last-in-first-out (LIFO) stack of generic items.
+ *  It supports the usual <em>push</em>
+ *  and <em>pop</em> operations, along with methods
+ *  for peeking at the top item, testing
+ *  if the stack is empty, and iterating through
  *  the items in LIFO order.
  *  <p>
  *  This implementation uses a singly linked list with a static nested class for
  *  linked-list nodes. See {@link LinkedStack} for the version from the
  *  textbook that uses a non-static nested class.
  *  See {@link ResizingArrayStack} for a version that uses a resizing array.
- *  The <em>push</em>, <em>pop</em>, <em>peek</em>, <em>size</em>, and <em>is-empty</em>
+ *  The <em>push</em>, <em>pop</em>, <em>peek</em>,
+ *  <em>size</em>, and <em>is-empty</em>
  *  operations all take constant time in the worst case.
  *  <p>
  *  For additional documentation,
@@ -24,7 +28,13 @@ import java.util.NoSuchElementException;
  *  @param <Item> the generic type of an item in this stack
  */
 public class Stack<Item> implements Iterable<Item> {
+    /**
+     * top of stack.
+     */
     private Node<Item> first;     // top of stack
+    /**
+     * Size of the stack.
+     */
     private int n;                // size of the stack
 
     // helper linked list class

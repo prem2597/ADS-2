@@ -14,12 +14,16 @@ import java.util.Map;
  * reference GeeksforGeeks for parsing.
  */
 public final class WordNet {
-    Digraph obj = new Digraph(5);
+    /**
+     * Creating an object for digraph class.
+     */
+    private Digraph obj;
     // Constructor.
     private WordNet(final String filename1,
     final String filename2) {
         synsetdata = parseSynsets(filename1);
         map = parseHypernyms(filename2);
+        obj = new Digraph(synsetdata.size());
     }
     /**
      * Here we are writing the code to store the data in hash map.
@@ -32,9 +36,10 @@ public final class WordNet {
     private Map<String, List<String>> map = new HashMap<String, List<String>>();
 
     /**
-     * This method will take the Synsets file as the input and will parse the data.
+     * This method will take the Synsets file as
+     * the input and will parse the data.
      * This method will also store all the synsets.
-     * 
+     *
      * @param filename Synsets file location.
      * @return return string array.
      * @throws IOException Exception handling.
@@ -66,7 +71,7 @@ public final class WordNet {
 
     /**
      * This method will parse the data of the hypernyms and stores its values.
-     * 
+     *
      * @param filename hypernyms file location.
      * @return returns String array.
      * @throws IOException Exception handling cases.
@@ -103,14 +108,17 @@ public final class WordNet {
     }
 
     /**
-     * The main method is used to call the synsets and hypernyms and parse the data.
-     * 
+     * The main method is used to call the
+     * synsets and hypernyms and parse the data.
+     *
      * @param args String arguments
      * @throws IOException Exception handling
      */
     public static void main(final String[] args) throws IOException {
-        String parseSynsets = "/home/prem/Documents/ADS-2_2019501109/Week 1/Day 1/synsets.txt";
-        String parseHypernyms = "/home/prem/Documents/ADS-2_2019501109/Week 1/Day 1/hypernyms.txt";
+        String parseSynsets =
+        "/home/prem/Documents/ADS-2_2019501109/Week 1/Day 1/synsets.txt";
+        String parseHypernyms =
+        "/home/prem/Documents/ADS-2_2019501109/Week 1/Day 1/hypernyms.txt";
         // parseSynsets(parseSynsets);
         // parseHypernyms(parseHypernyms);
         WordNet a = new WordNet(parseSynsets, parseHypernyms);
