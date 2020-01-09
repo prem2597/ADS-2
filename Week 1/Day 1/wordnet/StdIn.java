@@ -1,18 +1,9 @@
-/******************************************************************************
- *  Compilation:  javac StdIn.java
- *  Execution:    java StdIn   (interactive test of basic functionality)
- *  Dependencies: none
- *
- *  Reads in data of various types from standard input.
- *
- ******************************************************************************/
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-
 /**
  *  The {@code StdIn} class provides static methods for reading strings
  *  and numbers from standard input.
@@ -636,58 +627,4 @@ public final class StdIn {
     public static String[] readStrings() {
         return readAllStrings();
     }
-
-
-    /**
-     * Interactive test of basic functionality.
-     *
-     * @param args the command-line arguments
-     */
-    // public static void main(String[] args) {
-
-    //     StdOut.print("Type a string: ");
-    //     String s = StdIn.readString();
-    //     StdOut.println("Your string was: " + s);
-    //     StdOut.println();
-
-    //     StdOut.print("Type an int: ");
-    //     int a = StdIn.readInt();
-    //     StdOut.println("Your int was: " + a);
-    //     StdOut.println();
-
-    //     StdOut.print("Type a boolean: ");
-    //     boolean b = StdIn.readBoolean();
-    //     StdOut.println("Your boolean was: " + b);
-    //     StdOut.println();
-
-    //     StdOut.print("Type a double: ");
-    //     double c = StdIn.readDouble();
-    //     StdOut.println("Your double was: " + c);
-    //     StdOut.println();
-    // }
-
 }
-
-/******************************************************************************
- *  Copyright 2002-2019, Robert Sedgewick and Kevin Wayne.
- *
- *  This file is part of algs4.jar, which accompanies the textbook
- *
- *      Algorithms, 4th edition by Robert Sedgewick and Kevin Wayne,
- *      Addison-Wesley Professional, 2011, ISBN 0-321-57351-X.
- *      http://algs4.cs.princeton.edu
- *
- *
- *  algs4.jar is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  algs4.jar is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with algs4.jar.  If not, see http://www.gnu.org/licenses.
- ******************************************************************************/

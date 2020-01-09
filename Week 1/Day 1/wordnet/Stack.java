@@ -35,14 +35,21 @@ public class Stack<Item> implements Iterable<Item> {
     /**
      * Size of the stack.
      */
-    private int n;                // size of the stack
-
-    // helper linked list class
+    private int n;
+    /**
+     * helper linked list class.
+     * @param <Item> Item type.
+     */
     private static class Node<Item> {
+        /**
+         * creating an object for the class.
+         */
         private Item item;
+        /**
+         * next to iterate the node.
+         */
         private Node<Item> next;
     }
-
     /**
      * Initializes an empty stack.
      */
@@ -50,7 +57,6 @@ public class Stack<Item> implements Iterable<Item> {
         first = null;
         n = 0;
     }
-
     /**
      * Returns true if this stack is empty.
      *
@@ -59,7 +65,6 @@ public class Stack<Item> implements Iterable<Item> {
     public boolean isEmpty() {
         return first == null;
     }
-
     /**
      * Returns the number of items in this stack.
      *
@@ -68,13 +73,12 @@ public class Stack<Item> implements Iterable<Item> {
     public int size() {
         return n;
     }
-
     /**
      * Adds the item to this stack.
      *
      * @param  item the item to add
      */
-    public void push(Item item) {
+    public void push(final Item item) {
         Node<Item> oldfirst = first;
         first = new Node<Item>();
         first.item = item;
@@ -89,14 +93,14 @@ public class Stack<Item> implements Iterable<Item> {
      * @throws NoSuchElementException if this stack is empty
      */
     public Item pop() {
-        if (isEmpty()) throw new NoSuchElementException("Stack underflow");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Stack underflow");
+        }
         Item item = first.item;        // save item to return
         first = first.next;            // delete first node
         n--;
         return item;                   // return the saved item
     }
-
-
     /**
      * Returns (but does not remove) the item most recently added to this stack.
      *
@@ -104,14 +108,16 @@ public class Stack<Item> implements Iterable<Item> {
      * @throws NoSuchElementException if this stack is empty
      */
     public Item peek() {
-        if (isEmpty()) throw new NoSuchElementException("Stack underflow");
+        if (isEmpty()) {
+            throw new NoSuchElementException("Stack underflow");
+        }
         return first.item;
     }
-
     /**
      * Returns a string representation of this stack.
      *
-     * @return the sequence of items in this stack in LIFO order, separated by spaces
+     * @return the sequence of items in this
+     * stack in LIFO order, separated by spaces
      */
     public String toString() {
         StringBuilder s = new StringBuilder();
@@ -121,21 +127,26 @@ public class Stack<Item> implements Iterable<Item> {
         }
         return s.toString();
     }
-       
-
     /**
-     * Returns an iterator to this stack that iterates through the items in LIFO order.
+     * Returns an iterator to this stack that
+     * iterates through the items in LIFO order.
      *
-     * @return an iterator to this stack that iterates through the items in LIFO order
+     * @return an iterator to this stack that
+     * iterates through the items in LIFO order
      */
     public Iterator<Item> iterator() {
         return new ListIterator(first);
     }
-
     // an iterator, doesn't implement remove() since it's optional
     private class ListIterator implements Iterator<Item> {
+        /**
+         * To represent the current pointer.
+         */
         private Node<Item> current;
-
+        /**
+         * To iterate the list.
+         * @param first to represent the pointer.
+         */
         public ListIterator(Node<Item> first) {
             current = first;
         }
@@ -149,9 +160,11 @@ public class Stack<Item> implements Iterable<Item> {
         }
 
         public Item next() {
-            if (!hasNext()) throw new NoSuchElementException();
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
             Item item = current.item;
-            current = current.next; 
+            current = current.next;
             return item;
         }
     }

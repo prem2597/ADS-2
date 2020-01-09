@@ -23,8 +23,15 @@ public class Digraph {
      */
     public void addEdge(final int v, final int w) {
         ArrayList<Integer> x = new ArrayList<Integer>();
+        if (v < 0) {
+            throw new IllegalArgumentException("vertices"
+             + " in a Digraph must be nonnegative");
+        }
         if (map.containsKey(v)) {
             x = map.get(v);
+            if (x.contains(w)) {
+                return;
+            }
             x.add(w);
             map.put(v, x);
             return;
@@ -38,6 +45,14 @@ public class Digraph {
     }
 
     public Iterable<Integer> adj(int v) {
-        return map.get(v);
+        if (v < 0) {
+            throw new IllegalArgumentException(" Size should"
+             + " be greater than zero");
+        }
+        if (v < map.size()) {
+            return map.get(v);
+        } else {
+            return null;
+        }
     }
 }
