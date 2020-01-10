@@ -13,7 +13,8 @@ import java.util.regex.Pattern;
  *      and converting each to a number, string, or boolean
  *  <li>those for reading characters from standard input, one at a time
  *  <li>those for reading lines from standard input, one at a time
- *  <li>those for reading a sequence of values of the same type from standard input,
+ *  <li>those for reading a sequence of
+ *  values of the same type from standard input,
  *      and returning the values in an array
  *  </ul>
  *  <p>
@@ -24,12 +25,15 @@ import java.util.regex.Pattern;
  *  To use this class, you must have {@code StdIn.class} in your
  *  Java classpath. If you used our autoinstaller, you should be all set.
  *  Otherwise, either download
- *  <a href = "https://introcs.cs.princeton.edu/java/code/stdlib.jar">stdlib.jar</a>
+ *  <a href = "https://introcs.cs.princeton.edu/
+ *  java/code/stdlib.jar">stdlib.jar</a>
  *  and add to your Java classpath or download
- *  <a href = "https://introcs.cs.princeton.edu/java/stdlib/StdIn.java">StdIn.java</a>
+ *  <a href = "https://introcs.cs.princeton.edu/
+ *  java/stdlib/StdIn.java">StdIn.java</a>
  *  and put a copy in your working directory.
  *  <p>
- *  <b>Reading tokens from standard input and converting to numbers and strings.</b>
+ *  <b>Reading tokens from standard input and
+ *  converting to numbers and strings.</b>
  *  You can use the following methods to read numbers, strings, and booleans
  *  from standard input one at a time:
  *  <ul>
@@ -55,13 +59,15 @@ import java.util.regex.Pattern;
  *  A <em>token</em> is a maximal sequence of non-whitespace characters.
  *  The precise rules for describing which tokens can be converted to
  *  integers and floating-point numbers are inherited from
- *  <a href = "http://docs.oracle.com/javase/7/docs/api/java/util/Scanner.html#number-syntax">Scanner</a>,
+ *  <a href = "http://docs.oracle.com/javase/7/docs/
+ *  api/java/util/Scanner.html#number-syntax">Scanner</a>,
  *  using the locale {@link Locale#US}; the rules
  *  for floating-point numbers are slightly different
  *  from those in {@link Double#valueOf(String)},
  *  but unlikely to be of concern to most programmers.
  *  <p>
- *  As an example, the following code fragment reads integers from standard input,
+ *  As an example, the following code fragment
+ *  reads integers from standard input,
  *  one at a time, and prints them one per line.
  *  <pre>
  *  while (!StdIn.isEmpty()) {
@@ -71,17 +77,21 @@ import java.util.regex.Pattern;
  *  </pre>
  *  <p>
  *  <b>Reading characters from standard input.</b>
- *  You can use the following two methods to read characters from standard input one at a time:
+ *  You can use the following two methods to read
+ *  characters from standard input one at a time:
  *  <ul>
  *  <li> {@link #hasNextChar()}
  *  <li> {@link #readChar()}
  *  </ul>
  *  <p>
- *  The first method returns true if standard input has more input (including whitespace).
- *  The second method reads and returns the next character of input on standard 
+ *  The first method returns true if standard
+ *  input has more input (including whitespace).
+ *  The second method reads and returns the next
+ *  character of input on standard
  *  input (possibly a whitespace character).
  *  <p>
- *  As an example, the following code fragment reads characters from standard input,
+ *  As an example, the following code fragment
+ *  reads characters from standard input,
  *  one character at a time, and prints it to standard output.
  *  <pre>
  *  while (StdIn.hasNextChar()) {
@@ -97,8 +107,9 @@ import java.util.regex.Pattern;
  *  <li> {@link #readLine()}
  *  </ul>
  *  <p>
- *  The first method returns true if standard input has more input (including whitespace).
- *  The second method reads and returns the remaining portion of 
+ *  The first method returns true if standard
+ *  input has more input (including whitespace).
+ *  The second method reads and returns the remaining portion of
  *  the next line of input on standard input (possibly whitespace),
  *  discarding the trailing line separator.
  *  <p>
@@ -144,11 +155,11 @@ import java.util.regex.Pattern;
  *  </pre>
  *  <p>
  *  <b>Differences with Scanner.</b>
- *  {@code StdIn} and {@link Scanner} are both designed to parse 
+ *  {@code StdIn} and {@link Scanner} are both designed to parse
  *  tokens and convert them to primitive types and strings.
  *  The main differences are summarized below:
  *  <ul>
- *  <li> {@code StdIn} is a set of static methods and reads 
+ *  <li> {@code StdIn} is a set of static methods and reads
  *       reads input from only standard input. It is suitable for use before
  *       a programmer knows about objects.
  *       See {@link In} for an object-oriented version that handles
@@ -160,7 +171,7 @@ import java.util.regex.Pattern;
  *  <li> {@code StdIn} coerces the character-set encoding to UTF-8,
  *       which is the most widely used character encoding for Unicode.
  *  <li> {@code StdIn} coerces the locale to {@link Locale#US},
- *       for consistency with {@link StdOut}, {@link Double#parseDouble(String)},
+ *       for consistency with {@link StdOut},{@link Double#parseDouble(String)},
  *       and floating-point literals.
  *  <li> {@code StdIn} has convenient methods for reading a single
  *       character; reading in sequences of integers, doubles, or strings;
@@ -168,7 +179,8 @@ import java.util.regex.Pattern;
  *  </ul>
  *  <p>
  *  Historical note: {@code StdIn} preceded {@code Scanner}; when
- *  {@code Scanner} was introduced, this class was re-implemented to use {@code Scanner}.
+ *  {@code Scanner} was introduced,
+ *  this class was re-implemented to use {@code Scanner}.
  *  <p>
  *  <b>Using standard input.</b>
  *  Standard input is a fundamental operating system abstraction on Mac OS X,
@@ -177,51 +189,65 @@ import java.util.regex.Pattern;
  *  will wait until you enter input on standard input.
  *  If your program has a loop that repeats until standard input is empty,
  *  you must signal that the input is finished.
- *  To do so, depending on your operating system and IDE, 
+ *  To do so, depending on your operating system and IDE,
  *  use either {@code <Ctrl-d>} or {@code <Ctrl-z>}, on its own line.
  *  If you are redirecting standard input from a file, you will not need
  *  to do anything to signal that the input is finished.
  *  <p>
  *  <b>Known bugs.</b>
- *  Java's UTF-8 encoding does not recognize the optional 
- *  <a href = "http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4508058">byte-order mask</a>.
+ *  Java's UTF-8 encoding does not recognize the optional
+ *  <a href = "http://bugs.sun.com/bugdatabase/
+ * view_bug.do?bug_id=4508058">byte-order mask</a>.
  *  If the input begins with the optional byte-order mask, {@code StdIn}
  *  will have an extra character {@code \}{@code uFEFF} at the beginning.
  *  <p>
- *  <b>Reference.</b> 
+ *  <b>Reference.</b>
  *  For additional documentation,
- *  see <a href="https://introcs.cs.princeton.edu/15inout">Section 1.5</a> of   
+ *  see <a href="https://introcs.cs.princeton.edu/15inout">Section 1.5</a> of
  *  <em>Computer Science: An Interdisciplinary Approach</em>
  *  by Robert Sedgewick and Kevin Wayne.
  *
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  *  @author David Pritchard
+ *  @author PREM
  */
 public final class StdIn {
 
     /*** begin: section (1 of 2) of code duplicated from In to StdIn. */
-    
     // assume Unicode UTF-8 encoding
     private static final String CHARSET_NAME = "UTF-8";
 
     // assume language = English, country = US for consistency with System.out.
+    /**
+     * Local varaiable.
+     */
     private static final Locale LOCALE = Locale.US;
 
     // the default token separator; we maintain the invariant that this value
     // is held by the scanner's delimiter between calls
-    private static final Pattern WHITESPACE_PATTERN = Pattern.compile("\\p{javaWhitespace}+");
+    /**
+     * The method intializes the values.
+     */
+    private static final Pattern WHITESPACE_PATTERN =
+    Pattern.compile("\\p{javaWhitespace}+");
 
     // makes whitespace significant
+    /**
+     * The method intializes the values.
+     */
     private static final Pattern EMPTY_PATTERN = Pattern.compile("");
 
     // used to read the entire input
+    /**
+     * The method intializes the values.
+     */
     private static final Pattern EVERYTHING_PATTERN = Pattern.compile("\\A");
 
     /*** end: section (1 of 2) of code duplicated from In to StdIn. */
 
     private static Scanner scanner;
- 
+
     // it doesn't make sense to instantiate this class
     private StdIn() { }
 
@@ -230,7 +256,7 @@ public final class StdIn {
 
    /**
      * Returns true if standard input is empty (except possibly for whitespace).
-     * Use this method to know whether the next call to {@link #readString()}, 
+     * Use this method to know whether the next call to {@link #readString()},
      * {@link #readDouble()}, etc will succeed.
      *
      * @return {@code true} if standard input is empty (except possibly
@@ -246,7 +272,8 @@ public final class StdIn {
      * next call to {@link #readLine()} will succeed.
      * This method is functionally equivalent to {@link #hasNextChar()}.
      *
-     * @return {@code true} if standard input has more input (including whitespace);
+     * @return {@code true} if standard input
+     *  has more input (including whitespace);
      *         {@code false} otherwise
      */
     public static boolean hasNextLine() {
@@ -255,10 +282,12 @@ public final class StdIn {
 
     /**
      * Returns true if standard input has more input (including whitespace).
-     * Use this method to know whether the next call to {@link #readChar()} will succeed.
+     * Use this method to know whether the
+     *  next call to {@link #readChar()} will succeed.
      * This method is functionally equivalent to {@link #hasNextLine()}.
      *
-     * @return {@code true} if standard input has more input (including whitespace);
+     * @return {@code true} if standard input has
+     *  more input (including whitespace);
      *         {@code false} otherwise
      */
     public static boolean hasNextChar() {
@@ -279,8 +308,7 @@ public final class StdIn {
         String line;
         try {
             line = scanner.nextLine();
-        }
-        catch (NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
             line = null;
         }
         return line;
@@ -300,12 +328,12 @@ public final class StdIn {
                 + " Please contact the authors.";
             scanner.useDelimiter(WHITESPACE_PATTERN);
             return ch.charAt(0);
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException("attempts to read a 'char' "
+            + "value from standard input, "
+            + "but no more tokens are available");
         }
-        catch (NoSuchElementException e) {
-            throw new NoSuchElementException("attempts to read a 'char' value from standard input, "
-                                           + "but no more tokens are available");
-        }
-    }  
+    }
 
 
    /**
@@ -315,9 +343,9 @@ public final class StdIn {
      * @throws NoSuchElementException if standard input is empty
      */
     public static String readAll() {
-        if (!scanner.hasNextLine())
+        if (!scanner.hasNextLine()) {
             return "";
-
+        }
         String result = scanner.useDelimiter(EVERYTHING_PATTERN).next();
         // not that important to reset delimeter, since now scanner is empty
         scanner.useDelimiter(WHITESPACE_PATTERN); // but let's do it anyway
@@ -334,51 +362,52 @@ public final class StdIn {
     public static String readString() {
         try {
             return scanner.next();
-        }
-        catch (NoSuchElementException e) {
-            throw new NoSuchElementException("attempts to read a 'String' value from standard input, "
-                                           + "but no more tokens are available");
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException("attempts to read a 'String' value"
+            + "from standard input, but no more tokens are available");
         }
     }
 
    /**
-     * Reads the next token from standard input, parses it as an integer, and returns the integer.
+     * Reads the next token from standard input,
+     * parses it as an integer, and returns the integer.
      *
      * @return the next integer on standard input
      * @throws NoSuchElementException if standard input is empty
-     * @throws InputMismatchException if the next token cannot be parsed as an {@code int}
+     * @throws InputMismatchException if the next token
+     * cannot be parsed as an {@code int}
      */
     public static int readInt() {
         try {
             return scanner.nextInt();
-        }
-        catch (InputMismatchException e) {
+        } catch (InputMismatchException e) {
             String token = scanner.next();
-            throw new InputMismatchException("attempts to read an 'int' value from standard input, "
-                                           + "but the next token is \"" + token + "\"");
-        }
-        catch (NoSuchElementException e) {
-            throw new NoSuchElementException("attemps to read an 'int' value from standard input, "
-                                           + "but no more tokens are available");
+            throw new InputMismatchException("attempts to read an 'int' value "
+            + "from standard input but the next token is \"" + token + "\"");
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException("attemps to read an 'int' value "
+            + "from standard input, but no more tokens are available");
         }
 
     }
 
    /**
-     * Reads the next token from standard input, parses it as a double, and returns the double.
+     * Reads the next token from standard input,
+     * parses it as a double, and returns the double.
      *
      * @return the next double on standard input
      * @throws NoSuchElementException if standard input is empty
-     * @throws InputMismatchException if the next token cannot be parsed as a {@code double}
+     * @throws InputMismatchException if the next token cannot
+     * be parsed as a {@code double}
      */
     public static double readDouble() {
         try {
             return scanner.nextDouble();
-        }
-        catch (InputMismatchException e) {
+        } catch (InputMismatchException e) {
             String token = scanner.next();
-            throw new InputMismatchException("attempts to read a 'double' value from standard input, "
-                                           + "but the next token is \"" + token + "\"");
+            throw new InputMismatchException("attempts to read a 'double' "
+            + "value from standard input, "
+            + "but the next token is \"" + token + "\"");
         }
         catch (NoSuchElementException e) {
             throw new NoSuchElementException("attempts to read a 'double' value from standard input, "
@@ -588,7 +617,6 @@ public final class StdIn {
     private static void resync() {
         setScanner(new Scanner(new java.io.BufferedInputStream(System.in), CHARSET_NAME));
     }
-    
     private static void setScanner(Scanner scanner) {
         StdIn.scanner = scanner;
         StdIn.scanner.useLocale(LOCALE);
@@ -598,7 +626,8 @@ public final class StdIn {
      * Reads all remaining tokens, parses them as integers, and returns
      * them as an array of integers.
      * @return all remaining integers, as an array
-     * @throws InputMismatchException if any token cannot be parsed as an {@code int}
+     * @throws InputMismatchException if any token cannot
+     * be parsed as an {@code int}
      * @deprecated Replaced by {@link #readAllInts()}.
      */
     @Deprecated
@@ -610,7 +639,8 @@ public final class StdIn {
      * Reads all remaining tokens, parses them as doubles, and returns
      * them as an array of doubles.
      * @return all remaining doubles, as an array
-     * @throws InputMismatchException if any token cannot be parsed as a {@code double}
+     * @throws InputMismatchException if any token cannot
+     * be parsed as a {@code double}
      * @deprecated Replaced by {@link #readAllDoubles()}.
      */
     @Deprecated
