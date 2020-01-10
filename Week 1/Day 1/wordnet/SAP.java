@@ -1,5 +1,7 @@
+import java.util.Scanner;
 /**
  * SAP class is used to find the shortest path.
+ * 
  * @author PREM
  */
 public class SAP {
@@ -20,7 +22,7 @@ public class SAP {
      * @param G Object parameter to describe the class.
      */
     public SAP(final Digraph G) {
-        this.G = new Digraph(G.V());
+        this.G = G;
     }
     /**
      * The method finds the length of the shortest path.
@@ -143,15 +145,25 @@ public class SAP {
         return ancestor;
     }
     public static void main(String[] args) {
-        In in = new In(args[0]);
-        Digrapgh G = new Digraph(in);
-        SAP sap = new SAP(G);
-        while (!StdIn.isEmpty()) {
-            int v = StdIn.readInt();
-            int w = StdIn.readInt();
-            int length = sap.length(v,w);
-            int ancestor = sap.ancestor(v, w);
-            StdOut.printf("length = %d, ancestor = %d\n", length, ancestor);
+        // In in = new In(args[0]);
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+        Digraph G = new Digraph(a);
+
+        while (sc.hasNext()) {
+            G.addEdge(sc.nextInt(), sc.nextInt());
         }
+        SAP sap = new SAP(G);
+        // Scanner sc = new Scanner("/home/prem/Documents/ADS-2_2019501109/ADS-2_2019501109-1/Week 1/Day 1/wordnet/digraph1.txt");
+        // Digraph G = new Digraph(sc);
+        // while (!StdIn.isEmpty()) {
+        //     int v = StdIn.readInt();
+        //     int w = StdIn.readInt();
+        //     int length = sap.length(v,w);
+        //     int ancestor = sap.ancestor(v, w);
+        //     StdOut.printf("length = %d, ancestor = %d\n", length, ancestor);
+        // }
+        System.out.println(sap.ancestor(12, 10));
     }
 }

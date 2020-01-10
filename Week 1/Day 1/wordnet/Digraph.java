@@ -1,14 +1,36 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 /**
  * Implementing the edge and vertex for the hypernums.
  * @author PREM
  */
 public class Digraph {
+    private int v;
+    private int[] indegree;
+    int vertex;
     Digraph(final int V) {
         map = new HashMap<Integer, ArrayList<Integer>>(V);
+        vertex = V;
     }
-    /**
+    // public Digraph(Scanner sc) {
+    //     if (sc == null) {
+    //         throw new IllegalArgumentException("argument is null");
+    //     }
+    //     try {
+    //         String[] name = sc.nextLine().split(" ");
+    //         this.v = Integer.parseInt(name[0]);
+    //         if (this.v < 0) {
+    //             throw new IllegalArgumentException("number of vertices in a Digraph must be nonnegative");
+    //         }
+    //         indegree = new int[this.v];
+
+    //     } catch(NoSuchElementException e) {
+    //         throw new IllegalArgumentException("invalid input format in Digraph constructor", e);
+    //     }
+	// }
+	/**
      * This map function is used to join the index
      * between the Integere and the arraylist.
      */
@@ -44,7 +66,7 @@ public class Digraph {
      * @return size.
      */
     public int V() {
-        return map.size();
+        return vertex;
     }
     /**
      * To iterate the loop.
@@ -56,10 +78,14 @@ public class Digraph {
             throw new IllegalArgumentException(" Size should"
              + " be greater than zero");
         }
-        if (v < map.size()) {
+        if (map.containsKey(v)) {
             return map.get(v);
-        } else {
-            return null;
         }
+        return null;
+        // if (v < map.size()) {
+        //     return map.get(v);
+        // } else {
+        //     return null;
+        // }
     }
 }
