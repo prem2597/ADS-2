@@ -19,12 +19,7 @@ public final class WordNet {
      */
     private Digraph obj;
     // Constructor.
-    /**
-     * Wordnet file to represents the relation between the synset and hypernyms.
-     * @param filename1   synsets file.
-     * @param filename2   Hypernyms files.
-     */
-    public WordNet(final String filename1,
+    private WordNet(final String filename1,
     final String filename2) {
         synsetdata = parseSynsets(filename1);
         map = parseHypernyms(filename2);
@@ -112,21 +107,6 @@ public final class WordNet {
         return map;
     }
 
-    public Iterable<String> nouns() {
-        return null;
-    }
-
-    public boolean isNoun(String word) {
-        return false;
-    }
-
-    public int distance(String nounA, String nounB) {
-        return 0;
-    }
-
-    public String sap(String nounA, String nounB) {
-        return nounB;
-    }
     /**
      * The main method is used to call the
      * synsets and hypernyms and parse the data.

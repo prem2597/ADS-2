@@ -1,91 +1,240 @@
-import java.util.ArrayList;
-import java.util.HashMap;
+// import edu.princeton.cs.algs4;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 /**
- * Implementing the edge and vertex for the hypernums.
- * @author PREM
+ *  The {@code Digraph} class represents a directed graph of vertices
+ *  named 0 through <em>V</em> - 1.
+ *  It supports the following two primary operations: add an edge to the digraph,
+ *  iterate over all of the vertices adjacent from a given vertex.
+ *  It also provides
+ *  methods for returning the indegree or outdegree of a vertex, 
+ *  the number of vertices <em>V</em> in the digraph, 
+ *  the number of edges <em>E</em> in the digraph, and the reverse digraph.
+ *  Parallel edges and self-loops are permitted.
+ *  <p>
+ *  This implementation uses an <em>adjacency-lists representation</em>, which
+ *  is a vertex-indexed array of {@link Bag} objects.
+ *  It uses &Theta;(<em>E</em> + <em>V</em>) space, where <em>E</em> is
+ *  the number of edges and <em>V</em> is the number of vertices.
+ *  All instance methods take &Theta;(1) time. (Though, iterating over
+ *  the vertices returned by {@link #adj(int)} takes time proportional
+ *  to the outdegree of the vertex.)
+ *  Constructing an empty digraph with <em>V</em> vertices takes
+ *  &Theta;(<em>V</em>) time; constructing a digraph with <em>E</em> edges
+ *  and <em>V</em> vertices takes &Theta;(<em>E</em> + <em>V</em>) time.
+ *  <p>
+ *  For additional documentation,
+ *  see <a href="https://algs4.cs.princeton.edu/42digraph">Section 4.2</a> of
+ *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ *
+ *  @author Robert Sedgewick
+ *  @author Kevin Wayne
  */
-public class Digraph {
-    private int v;
-    private int[] indegree;
-    int vertex;
-    Digraph(final int V) {
-        map = new HashMap<Integer, ArrayList<Integer>>(V);
-        vertex = V;
-    }
-    // public Digraph(Scanner sc) {
-    //     if (sc == null) {
-    //         throw new IllegalArgumentException("argument is null");
-    //     }
-    //     try {
-    //         String[] name = sc.nextLine().split(" ");
-    //         this.v = Integer.parseInt(name[0]);
-    //         if (this.v < 0) {
-    //             throw new IllegalArgumentException("number of vertices in a Digraph must be nonnegative");
-    //         }
-    //         indegree = new int[this.v];
 
-    //     } catch(NoSuchElementException e) {
-    //         throw new IllegalArgumentException("invalid input format in Digraph constructor", e);
-    //     }
-	// }
-	/**
-     * This map function is used to join the index
-     * between the Integere and the arraylist.
-     */
-    private HashMap<Integer, ArrayList<Integer>> map;
-    // new HashMap<Integer, ArrayList<Integer>>();
+public class Digraph {
+    private static final String NEWLINE = System.getProperty("line.separator");
+
+    private final int V;           // number of vertices in this digraph
+    private int E;                 // number of edges in this digraph
+    private Bag<Integer>[] adj;    // adj[v] = adjacency list for vertex v
+    private int[] indegree;        // indegree[v] = indegree of vertex v
+    
     /**
-     * This method is implemented to add the elements
-     * into the hash map to form a edge and a vertex.
+     * Initializes an empty digraph with <em>V</em> vertices.
      *
-     * @param v Key or the edge.
-     * @param w vertex.
+     * @param  V the number of vertices
+     * @throws IllegalArgumentException if {@code V < 0}
      */
-    public void addEdge(final int v, final int w) {
-        ArrayList<Integer> x = new ArrayList<Integer>();
-        if (v < 0) {
-            throw new IllegalArgumentException("vertices"
-             + " in a Digraph must be nonnegative");
+    public Digraph(int V) {
+        if (V < 0) throw new IllegalArgumentException("Number of vertices in a Digraph must be nonnegative");
+        this.V = V;
+        this.E = 0;
+        indegree = new int[V];
+        adj = (Bag<Integer>[]) new Bag[V];
+        for (int v = 0; v < V; v++) {
+            adj[v] = new Bag<Integer>();
         }
-        if (map.containsKey(v)) {
-            x = map.get(v);
-            if (x.contains(w)) {
-                return;
-            }
-            x.add(w);
-            map.put(v, x);
-            return;
-        }
-        x.add(w);
-        map.put(v, x);
     }
+
+    /**  
+     * Initializes a digraph from the specified input stream.
+     * The format is the number of vertices <em>V</em>,
+     * followed by the number of edges <em>E</em>,
+     * followed by <em>E</em> pairs of vertices, with each entry separated by whitespace.
+     *
+     * @param  in the input stream
+     * @throws IllegalArgumentException if {@code in} is {@code null}
+     * @throws IllegalArgumentException if the endpoints of any edge are not in prescribed range
+     * @throws IllegalArgumentException if the number of vertices or edges is negative
+     * @throws IllegalArgumentException if the input stream is in the wrong format
+     */
+    public Digraph(In in) {
+        if (in == null) throw new IllegalArgumentException("argument is null");
+        try {
+            this.V = in.readInt();
+            if (V < 0) throw new IllegalArgumentException("number of vertices in a Digraph must be nonnegative");
+            indegree = new int[V];
+            adj = (Bag<Integer>[]) new Bag[V];
+            for (int v = 0; v < V; v++) {
+                adj[v] = new Bag<Integer>();
+            }
+            int E = in.readInt();
+            if (E < 0) throw new IllegalArgumentException("number of edges in a Digraph must be nonnegative");
+            for (int i = 0; i < E; i++) {
+                int v = in.readInt();
+                int w = in.readInt();
+                addEdge(v, w); 
+            }
+        }
+        catch (NoSuchElementException e) {
+            throw new IllegalArgumentException("invalid input format in Digraph constructor", e);
+        }
+    }
+
     /**
-     * To return the size.
-     * @return size.
+     * Initializes a new digraph that is a deep copy of the specified digraph.
+     *
+     * @param  G the digraph to copy
+     * @throws IllegalArgumentException if {@code G} is {@code null}
+     */
+    public Digraph(Digraph G) {
+        if (G == null) throw new IllegalArgumentException("argument is null");
+
+        this.V = G.V();
+        this.E = G.E();
+        if (V < 0) throw new IllegalArgumentException("Number of vertices in a Digraph must be nonnegative");
+
+        // update indegrees
+        indegree = new int[V];
+        for (int v = 0; v < V; v++)
+            this.indegree[v] = G.indegree(v);
+
+        // update adjacency lists
+        adj = (Bag<Integer>[]) new Bag[V];
+        for (int v = 0; v < V; v++) {
+            adj[v] = new Bag<Integer>();
+        }
+
+        for (int v = 0; v < G.V(); v++) {
+            // reverse so that adjacency list is in same order as original
+            Stack<Integer> reverse = new Stack<Integer>();
+            for (int w : G.adj[v]) {
+                reverse.push(w);
+            }
+            for (int w : reverse) {
+                adj[v].add(w);
+            }
+        }
+    }
+        
+    /**
+     * Returns the number of vertices in this digraph.
+     *
+     * @return the number of vertices in this digraph
      */
     public int V() {
-        return vertex;
+        return V;
     }
+
     /**
-     * To iterate the loop.
-     * @param v size
-     * @return iterator.
+     * Returns the number of edges in this digraph.
+     *
+     * @return the number of edges in this digraph
      */
-    public Iterable<Integer> adj(final int v) {
-        if (v < 0) {
-            throw new IllegalArgumentException(" Size should"
-             + " be greater than zero");
+    public int E() {
+        return E;
+    }
+
+
+    // throw an IllegalArgumentException unless {@code 0 <= v < V}
+    private void validateVertex(int v) {
+        if (v < 0 || v >= V)
+            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
+    }
+
+    /**
+     * Adds the directed edge v→w to this digraph.
+     *
+     * @param  v the tail vertex
+     * @param  w the head vertex
+     * @throws IllegalArgumentException unless both {@code 0 <= v < V} and {@code 0 <= w < V}
+     */
+    public void addEdge(int v, int w) {
+        validateVertex(v);
+        validateVertex(w);
+        adj[v].add(w);
+        indegree[w]++;
+        E++;
+    }
+
+    /**
+     * Returns the vertices adjacent from vertex {@code v} in this digraph.
+     *
+     * @param  v the vertex
+     * @return the vertices adjacent from vertex {@code v} in this digraph, as an iterable
+     * @throws IllegalArgumentException unless {@code 0 <= v < V}
+     */
+    public Iterable<Integer> adj(int v) {
+        validateVertex(v);
+        return adj[v];
+    }
+
+    /**
+     * Returns the number of directed edges incident from vertex {@code v}.
+     * This is known as the <em>outdegree</em> of vertex {@code v}.
+     *
+     * @param  v the vertex
+     * @return the outdegree of vertex {@code v}               
+     * @throws IllegalArgumentException unless {@code 0 <= v < V}
+     */
+    public int outdegree(int v) {
+        validateVertex(v);
+        return adj[v].size();
+    }
+
+    /**
+     * Returns the number of directed edges incident to vertex {@code v}.
+     * This is known as the <em>indegree</em> of vertex {@code v}.
+     *
+     * @param  v the vertex
+     * @return the indegree of vertex {@code v}               
+     * @throws IllegalArgumentException unless {@code 0 <= v < V}
+     */
+    public int indegree(int v) {
+        validateVertex(v);
+        return indegree[v];
+    }
+
+    /**
+     * Returns the reverse of the digraph.
+     *
+     * @return the reverse of the digraph
+     */
+    public Digraph reverse() {
+        Digraph reverse = new Digraph(V);
+        for (int v = 0; v < V; v++) {
+            for (int w : adj(v)) {
+                reverse.addEdge(w, v);
+            }
         }
-        if (map.containsKey(v)) {
-            return map.get(v);
+        return reverse;
+    }
+
+    /**
+     * Returns a string representation of the graph.
+     *
+     * @return the number of vertices <em>V</em>, followed by the number of edges <em>E</em>,  
+     *         followed by the <em>V</em> adjacency lists
+     */
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        s.append(V + " vertices, " + E + " edges " + NEWLINE);
+        for (int v = 0; v < V; v++) {
+            s.append(String.format("%d: ", v));
+            for (int w : adj[v]) {
+                s.append(String.format("%d ", w));
+            }
+            s.append(NEWLINE);
         }
-        return null;
-        // if (v < map.size()) {
-        //     return map.get(v);
-        // } else {
-        //     return null;
-        // }
+        return s.toString();
     }
 }
