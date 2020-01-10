@@ -1,11 +1,13 @@
+// import edu.princeton.cs.algs4;
 public class Outcast {
     /**
      * constructor takes a WordNet object.
      * @param wordnet wordnet file.
      * @author PREM
      */
-    WordNet wordnet;
+    private WordNet myWordNet;
     public Outcast(WordNet wordnet) {
+        this.myWordNet = wordnet;
     }
     /**
      * given an array of WordNet nouns, return an outcast.
@@ -13,7 +15,24 @@ public class Outcast {
      * @return returns the value.
      */
     public String outcast(String[] nouns) {
-        return null;
+        int minCount = -1;
+        int maxCount = -1;
+        for (int i = 0; i <= nouns.length; i++) {
+            int distance = 0;
+            for (int j = 0; j <= nouns.length; j++) {
+                int l = myWordNet.distance(nouns[i], nouns[j]);
+                if (l == -1) {
+                    distance = Integer.MAX_VALUE;
+                } else {
+                    distance += l;
+                }
+            }
+            if (distance > minCount) {
+                minCount = distance;
+                maxCount = i;
+            }
+        }
+        return nouns[maxCount];
     }
     /**
      * see test client below.

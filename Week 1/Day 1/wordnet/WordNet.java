@@ -1,8 +1,10 @@
+// import edu.princeton.cs.algs4;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 /**
@@ -18,6 +20,7 @@ public final class WordNet {
      * Creating an object for digraph class.
      */
     private Digraph obj;
+    public SAP sap;
     // Constructor.
     /**
      * Wordnet file to represents the relation between the synset and hypernyms.
@@ -29,6 +32,7 @@ public final class WordNet {
         synsetdata = parseSynsets(filename1);
         map = parseHypernyms(filename2);
         obj = new Digraph(synsetdata.size());
+        sap = new SAP(obj);
     }
     /**
      * Here we are writing the code to store the data in hash map.
@@ -113,19 +117,84 @@ public final class WordNet {
     }
 
     public Iterable<String> nouns() {
-        return null;
+        return synsetdata.keySet();
     }
 
     public boolean isNoun(String word) {
-        return false;
+        return synsetdata.containsKey(word);
     }
 
     public int distance(String nounA, String nounB) {
-        return 0;
+        if (nounA == null) {
+            throw new java.lang.NullPointerException();
+        }
+        if (nounB == null) {
+            throw new java.lang.NullPointerException();
+        }
+        if (!isNoun(nounA)) {
+            throw new java.lang.IllegalArgumentException();
+        }
+        if (!isNoun(nounB)) {
+            throw new java.lang.IllegalArgumentException();
+        }
+        int indexA = -1;
+        int indexB = -1;
+        // for (String s : synsetdata.keySet()) {
+        //     if (s.equals(nounA)){
+        //         indexA = synsetdata.getKey(s);
+        //     }
+        // }
+        Iterator data = synsetdata.entrySet().iterator();
+        while (data.hasNext()) {
+            Map.Entry x = (Map.Entry) data.next();
+            if(x.getValue().equals(nounA)) {
+                indexA = (int) x.getKey();
+                break;
+            }
+            // if(x.getValue().equals(nounA)) {
+            //     indexB = (int) x.getKey();
+            // }
+        }
+        while (data.hasNext()) {
+            Map.Entry x = (Map.Entry) data.next();
+            if(x.getValue().equals(nounA)) {
+                indexB = (int) x.getKey();
+                break;
+            }
+            // if(x.getValue().equals(nounA)) {
+            //     indexB = (int) x.getKey();
+            // }
+        }
+        return sap.length(indexA, indexB);
+        // return 0;
     }
 
     public String sap(String nounA, String nounB) {
-        return nounB;
+        int indexA = -1;
+        int indexB = -1;
+        Iterator data = synsetdata.entrySet().iterator();
+        while (data.hasNext()) {
+            Map.Entry x = (Map.Entry) data.next();
+            if(x.getValue().equals(nounA)) {
+                indexA = (int) x.getKey();
+                break;
+            }
+            // if(x.getValue().equals(nounA)) {
+            //     indexB = (int) x.getKey();
+            // }
+        }
+        while (data.hasNext()) {
+            Map.Entry x = (Map.Entry) data.next();
+            if(x.getValue().equals(nounA)) {
+                indexB = (int) x.getKey();
+                break;
+            }
+            // if(x.getValue().equals(nounA)) {
+            //     indexB = (int) x.getKey();
+            // }
+        }
+        int ancestor = sap.ancestor(indexA, indexB);
+        return synsetdata.get(ancestor);
     }
     /**
      * The main method is used to call the
