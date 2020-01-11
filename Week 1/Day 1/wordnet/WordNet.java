@@ -1,6 +1,13 @@
-// import edu.princeton.cs.algs4;
-import java.io.BufferedReader;
-import java.io.FileReader;
+// import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.In;
+// import edu.princeton.cs.algs4.Map;
+import edu.princeton.cs.algs4.Digraph;
+// import edu.princeton.cs.algs4.HashMap;
+// import edu.princeton.cs.algs4.Iterator;
+
+// import java.io.BufferedReader;
+// import java.io.FileReader;
+// import java.io.IOException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,8 +26,8 @@ public final class WordNet {
     /**
      * Creating an object for digraph class.
      */
-    private Digraph obj;
-    public SAP sap;
+    private edu.princeton.cs.algs4.Digraph obj;
+    private SAP sap;
     // Constructor.
     /**
      * Wordnet file to represents the relation between the synset and hypernyms.
@@ -31,7 +38,7 @@ public final class WordNet {
     final String filename2) {
         synsetdata = parseSynsets(filename1);
         map = parseHypernyms(filename2);
-        obj = new Digraph(synsetdata.size());
+        obj = new edu.princeton.cs.algs4.Digraph(synsetdata.size());
         sap = new SAP(obj);
     }
     /**
@@ -57,10 +64,10 @@ public final class WordNet {
         // String[] synsetsArray = {};
         // int k = synsetsArray.length;
         try {
-            FileReader data = new FileReader(filename);
-            BufferedReader bufRead = new BufferedReader(data);
+            In data = new In(filename);
+            // In bufRead = new In();
             String myLine = null;
-            while ((myLine = bufRead.readLine()) != null) {
+            while ((myLine = data.readLine()) != null) {
                 String[] array1 = myLine.split(",");
                 // String[] array2 = array1[1].split(" ");
                 // for (int i = 0; i < array1.length; i++) {
@@ -71,7 +78,7 @@ public final class WordNet {
                 System.out.println(array1[1]);
                 synsetdata.put(array1[0], array1[1]);
             }
-            bufRead.close();
+            data.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,10 +94,10 @@ public final class WordNet {
      */
     private Map<String, List<String>> parseHypernyms(final String filename) {
         try {
-            FileReader data = new FileReader(filename);
-            BufferedReader bufRead = new BufferedReader(data);
+            In data = new In(filename);
+            // BufferedReader bufRead = new BufferedReader(data);
             String myLine = null;
-            while ((myLine = bufRead.readLine()) != null) {
+            while ((myLine = data.readLine()) != null) {
                 String[] array1 = myLine.split(",");
                 // String[] array2 = array1[1].split(" ");
                 for (int i = 0; i < array1.length; i++) {
@@ -105,7 +112,7 @@ public final class WordNet {
                 // valSetOne.add("Aeroplane");
                 map.put(array1[0], listdata);
             }
-            bufRead.close();
+            data.close();
             // System.out.println(map(25));
             // for (int j = 0; j <= 253; j++) {
             // System.out.println(map.get("166"));
@@ -203,19 +210,22 @@ public final class WordNet {
      * @param args String arguments
      * @throws IOException Exception handling
      */
-    public static void main(final String[] args) throws IOException {
-        String parseSynsets =
-        "/home/prem/Documents/ADS-2_2019501109/Week 1/Day 1/synsets.txt";
-        String parseHypernyms =
-        "/home/prem/Documents/ADS-2_2019501109/Week 1/Day 1/hypernyms.txt";
-        // parseSynsets(parseSynsets);
-        // parseHypernyms(parseHypernyms);
-        WordNet a = new WordNet(parseSynsets, parseHypernyms);
-        for (Map.Entry<String, List<String>> entry : a.map.entrySet()) {
-            for (int i = 0; i < entry.getValue().size(); i++) {
-                a.obj.addEdge(Integer.parseInt(entry.getKey()),
-                Integer.parseInt(entry.getValue().get(i)));
-            }
-        }
-    }
+    // public static void main(final String[] args) throws IOException {
+    //     // System.out.print("a1");
+    //     String parseSynsets =
+    //     "/home/prem/Documents/ADS-2_2019501109/Week 1/Day 1/synsets.txt";
+    //     // System.out.print("a2");
+    //     String parseHypernyms =
+    //     "/home/prem/Documents/ADS-2_2019501109/Week 1/Day 1/hypernyms.txt";
+    //     // parseSynsets(parseSynsets);
+    //     // parseHypernyms(parseHypernyms);
+    //     WordNet a = new WordNet(parseSynsets, parseHypernyms);
+    //     // System.out.print("a");
+    //     for (Map.Entry<String, List<String>> entry : a.map.entrySet()) {
+    //         for (int i = 0; i < entry.getValue().size(); i++) {
+    //             a.obj.addEdge(Integer.parseInt(entry.getKey()),
+    //             Integer.parseInt(entry.getValue().get(i)));
+    //         }
+    //     }
+    // }
 }

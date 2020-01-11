@@ -1,5 +1,6 @@
-// import edu.princeton.cs.algs4;
-import java.util.Scanner;
+import edu.princeton.cs.algs4.Digraph;
+import edu.princeton.cs.algs4.BreadthFirstDirectedPaths;
+// import java.util.Scanner;
 /**
  * SAP class is used to find the shortest path.
  * 
@@ -9,7 +10,7 @@ public class SAP {
     /**
      * Creating an object to Digraph class.
      */
-    Digraph G;
+    edu.princeton.cs.algs4.Digraph G;
     /**
      * Creating an object to BreadthFirstDirectedPaths class.
      */
@@ -22,7 +23,7 @@ public class SAP {
      * Constructor to initialize the values.
      * @param G Object parameter to describe the class.
      */
-    public SAP(final Digraph G) {
+    public SAP(final edu.princeton.cs.algs4.Digraph G) {
         this.G = G;
     }
     /**
@@ -145,26 +146,34 @@ public class SAP {
         }
         return ancestor;
     }
+    /**
     public static void main(String[] args) {
         In in = new In("/home/prem/Documents/ADS-2_2019501109/ADS-2_2019501109-1/Week 1/Day 1/wordnet/digraph1.txt");
-        // Scanner sc = new Scanner(System.in);
+        // System.out.print(in);
+        // // Scanner sc = new Scanner(System.in);
         // int a = sc.nextInt();
         // int b = sc.nextInt();
         Digraph G = new Digraph(in);
 
+        
         // while (sc.hasNext()) {
         //     G.addEdge(sc.nextInt(), sc.nextInt());
         // }
         SAP sap = new SAP(G);
+        // System.out.print("a");
+        // System.out.print(sap);
         // Scanner sc = new Scanner("/home/prem/Documents/ADS-2_2019501109/ADS-2_2019501109-1/Week 1/Day 1/wordnet/digraph1.txt");
         // Digraph G = new Digraph(in);
         while (!StdIn.isEmpty()) {
+            // System.out.print(StdIn);
             int v = StdIn.readInt();
+            System.out.println(v);
             int w = StdIn.readInt();
+            System.out.println(w);
             int length = sap.length(v,w);
             int ancestor = sap.ancestor(v, w);
             StdOut.printf("length = %d, ancestor = %d\n", length, ancestor);
         }
         // System.out.println(sap.ancestor(12, 10));
-    }
+    }*/
 }
