@@ -42,19 +42,19 @@ public class SeamCarver {
             throw new IllegalArgumentException();
         }
         // return 0.0;
-        return Math.sqrt(horizontal(x, y) + vertical(x, y));
+        return Math.pow((horizontal(x, y) + vertical(x, y)), 0.5);
     }
 
-    public int[] rbg(int x, int y) {
+    public Integer[] rbg(int x, int y) {
         List<Integer> arrList = new ArrayList<Integer>();
         // List<Integer> arrlist = new ArrayList<Integer>();
         value = picture.get(x, y);
         arrList.add(value.getRed());
         arrList.add(value.getBlue());
         arrList.add(value.getGreen());
-        int[] a = new int[3];
+        Integer[] a = arrList.toArray(new Integer[3]);
         // int[] a = new int[arrlist.size()];
-        arrList.toArray();
+        // a = arrList.toArray();
         return a;
     }
 
@@ -71,16 +71,16 @@ public class SeamCarver {
         //         throw new IllegalArgumentException();
         //     }
         // }
-        if (x == 0) {
-            left = width() - 1;
-        } else if(x == width() - 1) {
-            right = 0;
-        }
-        int[] x1 = rbg(left, y);
-        int[] x2 = rbg(right, y);
-        dR = Math.abs(x1[0] - x2[0]);
-        dB = Math.abs(x1[1] - x2[1]);
-        dG = Math.abs(x1[2] - x2[2]);
+        // if (x == 0) {
+        //     left = width() - 1;
+        // } else if(x == width() - 1) {
+        //     right = 0;
+        // }
+        Integer[] x1 = rbg(left, y);
+        Integer[] x2 = rbg(right, y);
+        dR = x2[0] - x1[0];
+        dB = x2[1] - x1[1];
+        dG = x2[2] - x1[2];
         return dR * dR + dB * dB + dG * dG;
     }
 
@@ -97,16 +97,16 @@ public class SeamCarver {
         //         throw new IllegalArgumentException();
         //     }
         // }
-        if (y == 0) {
-            up = height() - 1;
-        } else if (y == height() - 1) {
-            down = 0;
-        }
-        int[] y1 = rbg(x, up);
-        int[] y2 = rbg(x, down);
-        dR = Math.abs(y1[0] - y2[0]);
-        dB = Math.abs(y1[1] - y2[1]);
-        dG = Math.abs(y1[2] - y2[2]);
+        // if (y == 0) {
+        //     up = height() - 1;
+        // } else if (y == height() - 1) {
+        //     down = 0;
+        // }
+        Integer[] y1 = rbg(x, up);
+        Integer[] y2 = rbg(x, down);
+        dR = y2[0] - y1[0];
+        dB = y2[1] - y1[1];
+        dG = y2[2] - y1[2];
         return dR * dR + dB * dB + dG * dG;
     }
 
