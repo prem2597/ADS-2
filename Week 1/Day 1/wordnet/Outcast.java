@@ -15,14 +15,14 @@ public class Outcast {
      * @return returns the value.
      */
     public String outcast(String[] nouns) {
-        int minCount = -1;
-        int maxCount = -1;
+        int minCount = 0;
+        int maxCount = 0;
         for (int i = 0; i <= nouns.length; i++) {
             int distance = 0;
             for (int j = 0; j <= nouns.length; j++) {
                 int l = myWordNet.distance(nouns[i], nouns[j]);
                 if (l == -1) {
-                    distance = Integer.MAX_VALUE;
+                    distance = Integer.MIN_VALUE;
                 } else {
                     distance += l;
                 }
@@ -31,6 +31,10 @@ public class Outcast {
                 minCount = distance;
                 maxCount = i;
             }
+            // if(l > minCount) {
+            //     minCount = l;
+            //     maxCount = i;
+            // }
         }
         return nouns[maxCount];
     }

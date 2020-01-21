@@ -8,12 +8,15 @@ import edu.princeton.cs.algs4.Digraph;
 // import java.io.BufferedReader;
 // import java.io.FileReader;
 // import java.io.IOException;
+// import java.io.IOException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 /**
  * Implementing the parsing logic to check the data in CSV file so that to form
  * a wordNet. For the Parsing the csv file in java I had refered to Geeks for
@@ -26,8 +29,17 @@ public final class WordNet {
     /**
      * Creating an object for digraph class.
      */
-    private edu.princeton.cs.algs4.Digraph obj;
+    private Digraph obj;
     private SAP sap;
+    /**
+     * Here we are writing the code to store the data in hash map.
+     */
+    private static HashMap<Integer, String> synsetdata = new HashMap<>();
+    /**
+     * Here we are writing the code to store the data in such a way
+     * that one key will have multiple values in it.
+     */
+    private Map<String, Set<Integer>> map = new HashMap<String, Set<Integer>>();
     // Constructor.
     /**
      * Wordnet file to represents the relation between the synset and hypernyms.
@@ -36,20 +48,12 @@ public final class WordNet {
      */
     public WordNet(final String filename1,
     final String filename2) {
-        synsetdata = parseSynsets(filename1);
-        map = parseHypernyms(filename2);
-        obj = new edu.princeton.cs.algs4.Digraph(synsetdata.size());
+        parseSynsets(filename1);
+        parseHypernyms(filename2);
+        obj = new Digraph(synsetdata.size());
         sap = new SAP(obj);
     }
-    /**
-     * Here we are writing the code to store the data in hash map.
-     */
-    private static HashMap<String, String> synsetdata = new HashMap<>();
-    /**
-     * Here we are writing the code to store the data in such a way
-     * that one key will have multiple values in it.
-     */
-    private Map<String, List<String>> map = new HashMap<String, List<String>>();
+    
 
     /**
      * This method will take the Synsets file as
@@ -60,29 +64,28 @@ public final class WordNet {
      * @return return string array.
      * @throws IOException Exception handling.
      */
-    private HashMap<String, String> parseSynsets(final String filename) {
-        // String[] synsetsArray = {};
-        // int k = synsetsArray.length;
-        try {
-            In data = new In(filename);
-            // In bufRead = new In();
-            String myLine = null;
-            while ((myLine = data.readLine()) != null) {
-                String[] array1 = myLine.split(",");
-                // String[] array2 = array1[1].split(" ");
-                // for (int i = 0; i < array1.length; i++) {
-                // System.out.println(array1[i]);
-                // System.out.println(array1[i+1]);
-                // }
-                System.out.println(array1[0]);
-                System.out.println(array1[1]);
-                synsetdata.put(array1[0], array1[1]);
+    private void parseSynsets(final String filename) {
+        In data = new In(filename);
+        String myLine = null;
+        while ((myLine = data.readLine()) != null) {
+            String[] array1 = myLine.split(",");
+            // System.out.println(array1[0]);
+            // System.out.println(array1[1]);
+            synsetdata.put(Integer.parseInt(array1[0]), array1[1]);
+            String [] nouns = array1[1].split(" ");
+            for (String s : nouns) {
+                if (!map.containsKey(s)) {
+                    HashSet<Integer> x = new HashSet<>();
+                    x.add(Integer.parseInt(array1[0]));
+                    map.put(s, x);
+                } else {
+                    Set<Integer> y = map.get(s);
+                    y.add(Integer.parseInt(array1[0]));
+                    map.put(s, y);
+                }
             }
-            data.close();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        return synsetdata;
+        data.close();
     }
 
     /**
@@ -92,51 +95,38 @@ public final class WordNet {
      * @return returns String array.
      * @throws IOException Exception handling cases.
      */
-    private Map<String, List<String>> parseHypernyms(final String filename) {
-        try {
-            In data = new In(filename);
-            // BufferedReader bufRead = new BufferedReader(data);
-            String myLine = null;
-            while ((myLine = data.readLine()) != null) {
-                String[] array1 = myLine.split(",");
-                // String[] array2 = array1[1].split(" ");
-                for (int i = 0; i < array1.length; i++) {
-                    System.out.println(array1[i]);
-                }
-                List<String> listdata = new ArrayList<String>();
-                for (int i = 1; i < array1.length; i++) {
-                    // System.out.println(array1[i]);
-                    listdata.add(array1[i]);
-                }
-                // valSetOne.add("Apple");
-                // valSetOne.add("Aeroplane");
-                map.put(array1[0], listdata);
+    private void parseHypernyms(final String filename) {
+        In data = new In(filename);
+        String myLine = null;
+        while ((myLine = data.readLine()) != null) {
+            String[] array1 = myLine.split(",");
+            for (int i = 0; i < array1.length; i++) {
+                System.out.println(array1[i]);
             }
-            data.close();
-            // System.out.println(map(25));
-            // for (int j = 0; j <= 253; j++) {
-            // System.out.println(map.get("166"));
-            // }
-        } catch (Exception e) {
-            e.printStackTrace();
+            // List<String> listdata = new ArrayList<String>();
+            for (int i = 1; i < array1.length; i++) {
+                // listdata.add(array1[i]);
+                obj.addEdge(Integer.parseInt(array1[0]), Integer.parseInt(array1[i]));
+            }
+            // map.put(array1[0], listdata);
         }
-        return map;
+        data.close();
     }
 
     public Iterable<String> nouns() {
-        return synsetdata.keySet();
+        return map.keySet();
     }
 
     public boolean isNoun(String word) {
-        return synsetdata.containsKey(word);
+        return map.containsKey(word);
     }
 
     public int distance(String nounA, String nounB) {
         if (nounA == null) {
-            throw new java.lang.NullPointerException();
+            throw new java.lang.IllegalArgumentException();
         }
         if (nounB == null) {
-            throw new java.lang.NullPointerException();
+            throw new java.lang.IllegalArgumentException();
         }
         if (!isNoun(nounA)) {
             throw new java.lang.IllegalArgumentException();
@@ -144,63 +134,76 @@ public final class WordNet {
         if (!isNoun(nounB)) {
             throw new java.lang.IllegalArgumentException();
         }
-        int indexA = -1;
-        int indexB = -1;
+        // int indexA = -1;
+        // int indexB = -1;
         // for (String s : synsetdata.keySet()) {
         //     if (s.equals(nounA)){
         //         indexA = synsetdata.getKey(s);
         //     }
         // }
-        Iterator data = synsetdata.entrySet().iterator();
-        while (data.hasNext()) {
-            Map.Entry x = (Map.Entry) data.next();
-            if(x.getValue().equals(nounA)) {
-                indexA = (int) x.getKey();
-                break;
-            }
-            // if(x.getValue().equals(nounA)) {
-            //     indexB = (int) x.getKey();
-            // }
-        }
-        while (data.hasNext()) {
-            Map.Entry x = (Map.Entry) data.next();
-            if(x.getValue().equals(nounA)) {
-                indexB = (int) x.getKey();
-                break;
-            }
-            // if(x.getValue().equals(nounA)) {
-            //     indexB = (int) x.getKey();
-            // }
-        }
-        return sap.length(indexA, indexB);
+        // Iterator data = synsetdata.entrySet().iterator();
+        // while (data.hasNext()) {
+        //     Map.Entry x = (Map.Entry) data.next();
+        //     if(x.getValue().equals(nounA)) {
+        //         indexA = (int) x.getKey();
+        //         break;
+        //     }
+        //     // if(x.getValue().equals(nounA)) {
+        //     //     indexB = (int) x.getKey();
+        //     // }
+        // }
+        // while (data.hasNext()) {
+        //     Map.Entry x = (Map.Entry) data.next();
+        //     if(x.getValue().equals(nounA)) {
+        //         indexB = (int) x.getKey();
+        //         break;
+        //     }
+        //     // if(x.getValue().equals(nounA)) {
+        //     //     indexB = (int) x.getKey();
+        //     // }
+        // }
+        // return sap.length(indexA, indexB);
         // return 0;
+        return sap.length(map.get(nounA), map.get(nounB));
     }
 
     public String sap(String nounA, String nounB) {
-        int indexA = -1;
-        int indexB = -1;
-        Iterator data = synsetdata.entrySet().iterator();
-        while (data.hasNext()) {
-            Map.Entry x = (Map.Entry) data.next();
-            if(x.getValue().equals(nounA)) {
-                indexA = (int) x.getKey();
-                break;
-            }
-            // if(x.getValue().equals(nounA)) {
-            //     indexB = (int) x.getKey();
-            // }
+        if (nounA == null) {
+            throw new java.lang.IllegalArgumentException();
         }
-        while (data.hasNext()) {
-            Map.Entry x = (Map.Entry) data.next();
-            if(x.getValue().equals(nounA)) {
-                indexB = (int) x.getKey();
-                break;
-            }
-            // if(x.getValue().equals(nounA)) {
-            //     indexB = (int) x.getKey();
-            // }
+        if (nounB == null) {
+            throw new java.lang.IllegalArgumentException();
         }
-        int ancestor = sap.ancestor(indexA, indexB);
+        if (!isNoun(nounA)) {
+            throw new java.lang.IllegalArgumentException();
+        }
+        if (!isNoun(nounB)) {
+            throw new java.lang.IllegalArgumentException();
+        }
+        // int indexA = -1;
+        // int indexB = -1;
+        // Iterator data = synsetdata.entrySet().iterator();
+        // while (data.hasNext()) {
+        //     Map.Entry x = (Map.Entry) data.next();
+        //     if(x.getValue().equals(nounA)) {
+        //         indexA = (int) x.getKey();
+        //         break;
+        //     }
+        //     // if(x.getValue().equals(nounA)) {
+        //     //     indexB = (int) x.getKey();
+        //     // }
+        // }
+        // while (data.hasNext()) {
+        //     Map.Entry x = (Map.Entry) data.next();
+        //     if(x.getValue().equals(nounA)) {
+        //         indexB = (int) x.getKey();
+        //         break;
+        //     }
+        //     // if(x.getValue().equals(nounA)) {
+        //     //     indexB = (int) x.getKey();
+        //     // }
+        // }
+        int ancestor = sap.ancestor(map.get(nounA), map.get(nounB));
         return synsetdata.get(ancestor);
     }
     /**

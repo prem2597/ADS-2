@@ -10,20 +10,20 @@ public class SAP {
     /**
      * Creating an object to Digraph class.
      */
-    edu.princeton.cs.algs4.Digraph G;
+    private Digraph G;
     /**
      * Creating an object to BreadthFirstDirectedPaths class.
      */
-    BreadthFirstDirectedPaths bdp;
+    private BreadthFirstDirectedPaths bdp;
     /**
      * Creating an object to BreadthFirstDirectedPaths class.
      */
-    BreadthFirstDirectedPaths bdp2;
+    private BreadthFirstDirectedPaths bdp2;
     /**
      * Constructor to initialize the values.
      * @param G Object parameter to describe the class.
      */
-    public SAP(final edu.princeton.cs.algs4.Digraph G) {
+    public SAP(final Digraph G) {
         this.G = G;
     }
     /**
@@ -37,12 +37,10 @@ public class SAP {
         bdp2 = new BreadthFirstDirectedPaths(G, w);
         int V = G.V();
         if (v < 0 || v >= V) {
-            throw new IllegalArgumentException("vertex "
-            + v + " is not between 0 and " + (V-1));
+            throw new IllegalArgumentException();
         }
         if (w < 0 || w >= V) {
-            throw new IllegalArgumentException("vertex "
-            + w + " is not between 0 and " + (V-1));
+            throw new IllegalArgumentException();
         }
         int baselength = -1;
         for (int s = 0; s < G.V(); s++) {
@@ -76,19 +74,20 @@ public class SAP {
             throw new IllegalArgumentException("vertex "
             + w + " is not between 0 and " + (V - 1));
         }
-        int baselength = -1;
+        int baselength = Integer.MAX_VALUE;
         int ancestor = -1;
         for (int s = 0; s < G.V(); s++) {
             if (bdp.hasPathTo(s) && bdp2.hasPathTo(s)) {
                 int shortestDistance = bdp.distTo(s) + bdp2.distTo(s);
-                if (baselength == -1) {
-                    baselength = shortestDistance;
-                }
+                
                 if (baselength > shortestDistance) {
                     baselength = shortestDistance;
                     ancestor = s;
                 }
             }
+        }
+        if (baselength == Integer.MAX_VALUE) {
+            return -1;
         }
         return ancestor;
     }
@@ -130,19 +129,20 @@ public class SAP {
         //     throw new IllegalArgumentException("vertex "
         //     + w + " is not between 0 and " + (V - 1));
         // }
-        int baselength = -1;
+        int baselength = Integer.MAX_VALUE;
         int ancestor = -1;
         for (int s = 0; s < G.V(); s++) {
             if (bdp.hasPathTo(s) && bdp2.hasPathTo(s)) {
                 int shortestDistance = bdp.distTo(s) + bdp2.distTo(s);
-                if (baselength == -1) {
-                    baselength = shortestDistance;
-                }
+                
                 if (baselength > shortestDistance) {
                     baselength = shortestDistance;
                     ancestor = s;
                 }
             }
+        }
+        if (baselength == Integer.MAX_VALUE) {
+            return -1;
         }
         return ancestor;
     }
