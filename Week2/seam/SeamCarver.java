@@ -38,14 +38,14 @@ public class SeamCarver {
         if (x == (width() - 1) || x == 0 || y == 0 || y == (height() - 1)) {
             return 1000.00;
         }
-        if (x >= height() || x < 0 || y < 0 || y >= width()) {
+        if (x >= width() || x < 0 || y < 0 || y >= height()) {
             throw new IllegalArgumentException();
         }
         // return 0.0;
         return Math.pow((horizontal(x, y) + vertical(x, y)), 0.5);
     }
 
-    public Integer[] rbg(int x, int y) {
+    private Integer[] rbg(int x, int y) {
         List<Integer> arrList = new ArrayList<Integer>();
         // List<Integer> arrlist = new ArrayList<Integer>();
         value = picture.get(x, y);
@@ -58,7 +58,7 @@ public class SeamCarver {
         return a;
     }
 
-    public double horizontal(int x, int y) {
+    private double horizontal(int x, int y) {
         double dR, dG, dB;
         int left, right;
         left = x - 1;
@@ -84,7 +84,7 @@ public class SeamCarver {
         return dR * dR + dB * dB + dG * dG;
     }
 
-    public double vertical(int x, int y) {
+    private double vertical(int x, int y) {
         double dR, dG, dB;
         int up, down;
         up = y - 1;
