@@ -49,8 +49,9 @@ public final class WordNet {
     public WordNet(final String filename1,
     final String filename2) {
         parseSynsets(filename1);
-        parseHypernyms(filename2);
         obj = new Digraph(synsetdata.size());
+        parseHypernyms(filename2);
+
         sap = new SAP(obj);
     }
     
@@ -98,14 +99,22 @@ public final class WordNet {
     private void parseHypernyms(final String filename) {
         In data = new In(filename);
         String myLine = null;
-        while ((myLine = data.readLine()) != null) {
+        
+        while (data.hasNextLine()) {
+            // System.out.println(data.readLine());
+
+            myLine = data.readLine();
             String[] array1 = myLine.split(",");
-            for (int i = 0; i < array1.length; i++) {
-                System.out.println(array1[i]);
-            }
+            // for (int i = 0; i < array1.length; i++) {
+            //     System.out.println(array1[i]);
+            // }
+            // System.out.println(array1.length);
+            // System.out.println(myLine);
             // List<String> listdata = new ArrayList<String>();
             for (int i = 1; i < array1.length; i++) {
                 // listdata.add(array1[i]);
+                // System.out.println(i+"---"+array1[i]+"--"+array1[0]);
+
                 obj.addEdge(Integer.parseInt(array1[0]), Integer.parseInt(array1[i]));
             }
             // map.put(array1[0], listdata);
@@ -224,11 +233,12 @@ public final class WordNet {
     //     // parseHypernyms(parseHypernyms);
     //     WordNet a = new WordNet(parseSynsets, parseHypernyms);
     //     // System.out.print("a");
-    //     for (Map.Entry<String, List<String>> entry : a.map.entrySet()) {
-    //         for (int i = 0; i < entry.getValue().size(); i++) {
-    //             a.obj.addEdge(Integer.parseInt(entry.getKey()),
-    //             Integer.parseInt(entry.getValue().get(i)));
-    //         }
-    //     }
+    //     // for (Map.Entry<String, Set<Integer>> entry : a.map.entrySet()) {
+    //     //     for (int i = 0; i < entry.getValue().size(); i++) {
+    //     //         a.obj.addEdge(Integer.parseInt(entry.getKey()),
+    //     //         Integer.parseInt(((HashMap<Integer, String>) entry.getValue()).get(i)));
+    //     //     }
+    //     // }
+        
     // }
 }
