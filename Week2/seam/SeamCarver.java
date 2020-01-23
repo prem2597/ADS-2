@@ -12,13 +12,19 @@ public class SeamCarver {
     private final Picture picture;
     private final int w;
     private final int h;
+    private Double[][] energyVal;
     private Color value;
 
     public SeamCarver(final Picture picture) {
         this.picture = picture;
         w = width();
         h = height();
-
+        energyVal = new Double[h][w];
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                energyVal[i][j] = energy(j, i);
+            }
+        }
     }
 
     public Picture picture() {
@@ -120,14 +126,26 @@ public class SeamCarver {
     }
 
     public void removeHorizontalSeam(final int[] seam) {
-
+        // SeamRemover.removeHorizontalSeam(picture, findHorizontalSeam());
+        // removeSeam(seam);
     }
 
     public void removeVerticalSeam(final int[] seam) {
-
+        // SeamRemover.removeVerticalSeam(picture, findVerticalSeam());
     }
 
     // public static void main(String[] args) {
+    //     Picture picture = new Picture(args[0]);
+    //     StdOut.printf("image is %d pixels wide by %d pixels high.\n", picture.width(), picture.height());
         
+    //     SeamCarver sc = new SeamCarver(picture);
+        
+    //     StdOut.printf("Printing energy calculated for each pixel.\n");
+
+    //     for (int row = 0; row < sc.height(); row++) {
+    //         for (int col = 0; col < sc.width(); col++)
+    //             StdOut.printf("%9.02f ", sc.energy(col, row));
+    //         StdOut.println();
+    //     }
     // }
 }
