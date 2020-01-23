@@ -12,7 +12,7 @@ public class SeamCarver {
     private final Picture picture;
     private final int w;
     private final int h;
-    private Double[][] energyVal;
+    private static Double[][] energyVal;
     private Color value;
 
     public SeamCarver(final Picture picture) {
@@ -122,7 +122,46 @@ public class SeamCarver {
     }
 
     public int[] findVerticalSeam() {
+        
         return null;
+    }
+
+    private void getCummulative() {
+        // for (int row = 0; row < sc.height(); row++) {
+        // for (int col = 0; col < sc.width(); col++)
+        // StdOut.printf("%9.02f ", sc.energy(col, row));
+        // StdOut.println();
+        // }
+        for (int i = 0; i < energyVal.length; i++) {
+            double minm = energyVal[i][0];
+            for (int j = 0; j < energyVal[i].length; j++) {
+                // System.out.println(energyVal[i][j]);
+                // string += array[i][j];
+                // } System.out.println(string)
+                if (energyVal[i][j] < minm) {
+                    minm = energyVal[i][j];
+                }
+
+                
+            }
+            update(i, minm);
+        }
+
+        for (int row = 0; row < energyVal.length; row++) {
+            for (int col = 0; col < energyVal[row].length; col++) {
+                StdOut.printf("%9.02f ", energyVal[row][col]);
+            } 
+            StdOut.println();
+        }
+    }
+
+    private static void update(int i, Double minm) {
+        if (i == energyVal.length - 1) {
+            return;
+        }
+        for (int j = 0; j < energyVal[i+1].length; j++) {
+            energyVal[i+1][j] = energyVal[i+1][j] + minm;
+        }
     }
 
     public void removeHorizontalSeam(final int[] seam) {
@@ -134,18 +173,33 @@ public class SeamCarver {
         // SeamRemover.removeVerticalSeam(picture, findVerticalSeam());
     }
 
-    // public static void main(String[] args) {
-    //     Picture picture = new Picture(args[0]);
-    //     StdOut.printf("image is %d pixels wide by %d pixels high.\n", picture.width(), picture.height());
-        
-    //     SeamCarver sc = new SeamCarver(picture);
-        
-    //     StdOut.printf("Printing energy calculated for each pixel.\n");
+    public static void main(String[] args) {
 
-    //     for (int row = 0; row < sc.height(); row++) {
-    //         for (int col = 0; col < sc.width(); col++)
-    //             StdOut.printf("%9.02f ", sc.energy(col, row));
-    //         StdOut.println();
-    //     }
-    // }
+        Picture picture = new Picture(args[0]);
+        StdOut.printf("image is %d pixels wide by %d pixels high.\n", picture.width(), picture.height());
+
+        SeamCarver sc = new SeamCarver(picture);
+
+        StdOut.printf("Printing energy calculated for each pixel.\n");
+
+        // for (int row = 0; row < sc.height(); row++) {
+        // for (int col = 0; col < sc.width(); col++)
+        // StdOut.printf("%9.02f ", sc.energy(col, row));
+        // StdOut.println();
+        // }
+
+        // for (int row = 0; row < energyVal.length; row++) {
+        //     for (int col = 0; col < energyVal[row].length; col++) {
+        //         StdOut.printf("%9.02f ", energyVal[row][col]);
+        //     } 
+        //     StdOut.println();
+        // }
+        for (int row = 0; row < sc.height(); row++) {
+            for (int col = 0; col < sc.width(); col++)
+            StdOut.printf("%9.02f ", sc.energy(col, row));
+            StdOut.println();
+        }
+        StdOut.println("----------------------------------------------------------");
+        sc.getCummulative();
+    }
 }
