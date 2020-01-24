@@ -1,5 +1,5 @@
 // import java.lang.IllegalArgumentException;
-// import edu.princeton.cs.algs4.Picture;
+import edu.princeton.cs.algs4.Picture;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +32,8 @@ public class SeamCarver {
     }
 
     public Picture picture() {
-        return picture;
+        Picture picture2 = new Picture(this.picture);
+        return picture2;
     }
 
     public int width() {
@@ -46,12 +47,13 @@ public class SeamCarver {
     }
 
     public double energy(final int x, final int y) {
-        if (x == (width() - 1) || x == 0 || y == 0 || y == (height() - 1)) {
-            return 1000.00;
-        }
         if (x >= width() || x < 0 || y < 0 || y >= height()) {
             throw new IllegalArgumentException();
         }
+        if (x == (width() - 1) || x == 0 || y == 0 || y == (height() - 1)) {
+            return 1000.00;
+        }
+        
         // return 0.0;
         return Math.pow((horizontal(x, y) + vertical(x, y)), 0.5);
     }
@@ -184,6 +186,12 @@ public class SeamCarver {
             // seamPathData.add(y);
             // for (int j = 0; j < energyVal[x - 1].length; j++) {
             double minData = 0;
+            if (energyVal[0].length == 1) {
+                for (int i = 0; i <= energyVal.length; i++) {
+                    seamPathData[i] = 0;
+                }
+                return seamPathData;
+            }
             if (index >= energyVal[0].length) {
                 throw new IllegalArgumentException();
             }
@@ -407,10 +415,10 @@ public class SeamCarver {
     //     //     StdOut.printf("%9.02f ", sc.energy(col, row));
     //     //     StdOut.println();
     //     // }
-    //     // StdOut.println("----------------------------------------------------------");
+    //     StdOut.println("----------------------------------------------------------");
     //     // sc.getCummulative();
     //     sc.findVerticalSeam();
-    //     // StdOut.println("----------------------------------------------------------");
+    //     StdOut.println("----------------------------------------------------------");
     //     sc.findHorizontalSeam();
     // }
 }
