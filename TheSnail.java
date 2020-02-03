@@ -12,21 +12,32 @@ public class TheSnail {
         while(sc.hasNext()) {
             String data = sc.nextLine();
             int count = 0;
-            int m = 0;
+            double m = 0;
             String[] x = data.split(" ");
-            int h = Integer.parseInt(x[0]);
-            int u = Integer.parseInt(x[1]);
-            int d = Integer.parseInt(x[2]);
-            int f = Integer.parseInt(x[3]);
-            while ( m == h ) {
-                double y = (double) m;
+            double h = Double.parseDouble(x[0]);
+            double u = Double.parseDouble(x[1]);
+            double d = Double.parseDouble(x[2]);
+            double f = Double.parseDouble(x[3]);
+            double fat = (u * f)/100.00;
+            if ( h == 0 ) {
+                break;   
+            }
+            while ( m <= h  && m >= 0) {
+                count = count + 1;
                 if ( h == 0 ) {
-                    return;   
+                    break;   
                 }
-                y = y + u;
-                y = y - d;
-                
-                
+                m = m + u;
+                if ( m > h ) {
+                    break;   
+                }
+                m = m - d;
+                u = Math.max(0, u-fat);
+            }
+            if ( m >= h ) {
+                System.out.println("success on day " + count);
+            } else {
+                System.out.println("failure on day " + count);
             }
         }
         
