@@ -25,6 +25,34 @@ public class BlowingFuses {
             for ( int i = 0; i <= x; i++) {
                 consumption[i] = sc.nextInt();
             }
+            
+            int[] status = new int[x + 1];
+            int recent = 0;
+            int flag = 0;
+            for (int i = 0; i < y; i++) {
+                int finalstatus = sc.nextInt();
+                            
+                if (status[finalstatus] == 0) {
+                    recent = recent + consumption[finalstatus];
+                    status[finalstatus] = 1;
+                } else {
+                    recent = recent - consumption[finalstatus];
+                    status[finalstatus] = 0;
+                }
+                if (recent > z && flag == 0) {
+                    System.out.println("Sequence " + count);
+                    System.out.println("Fuse was blown.\n");
+                    flag = 1;
+                }
+                if (max < recent) {
+                    max = recent;
+                }
+            }
+            if ( flag == 0) {
+                System.out.println("Sequence " + count);
+                System.out.println("Fuse was not blown.");
+                System.out.println("Maximal power consumption was "+max+" amperes.\n");
+            }
         }
     }
 }
