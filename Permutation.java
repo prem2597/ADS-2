@@ -22,7 +22,7 @@ public class Permutation {
         }
         // System.out.println(x);
         if (x.length() == data.length() && k <= fact(data)) {
-            // System.out.println(x);
+            System.out.println(x+ " - " + k);
             z.put(k,x);
             k ++;
         }
@@ -68,6 +68,7 @@ public class Permutation {
         int x = Integer.parseInt(sc.nextLine());
         for (int i = 0; i < x; i++) {
             String data = sc.nextLine();
+            k = 1;
             int retrieve = Integer.parseInt(sc.nextLine());
             HashMap<Integer,StringBuilder> z = new HashMap<>();
             
