@@ -8,6 +8,8 @@ import java.util.Set;
  * This class is used to implement the Boggle solver and the score
  * for the boggle solver game.
  * @author PREM
+ * @reference stackoverflow.
+ * @reference algs4.
  */
 public class BoggleSolver {
     private TrieSET triedata;

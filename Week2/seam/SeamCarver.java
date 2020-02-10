@@ -7,6 +7,8 @@ import java.util.List;
 /**
  *  This method is implemented to create a immutable data type.
  *  @author Prem
+ *  @reference took help with piyush for implementing te remove horizontal and find horizontal methods.
+ *  @reference algs4.
  */
 public class SeamCarver {
 

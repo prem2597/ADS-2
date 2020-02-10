@@ -4,6 +4,7 @@ public class Outcast {
      * constructor takes a WordNet object.
      * @param wordnet wordnet file.
      * @author PREM
+     * @refernce algs4.
      */
     private WordNet myWordNet;
     public Outcast(WordNet wordnet) {

@@ -4,6 +4,7 @@ import edu.princeton.cs.algs4.BinaryStdOut;
 /**
  * This class is used to move all the characters to the front.
  * @author Prem.
+ * @reference algs4
  */
 public class MoveToFront {
 

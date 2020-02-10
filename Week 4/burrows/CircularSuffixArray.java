@@ -1,9 +1,10 @@
-// import edu.princeton.cs.algs4.SuffixArray;
-// import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.SuffixArray;
+import edu.princeton.cs.algs4.StdOut;
 import java.util.Arrays;
 /**
  * Circular Suffix Array used to rotate the suffixes.
  * @author Prem.
+ * @refernce stack overflow algs4.
  */
 public class CircularSuffixArray {
     private String x;
@@ -19,9 +20,9 @@ public class CircularSuffixArray {
         sa = new SuffixArray(s);
         sortSuffixes = new int[length()];
         for (int i = 0; i < length(); i++) {
-            sortSuffixes[i] = (length() - 1) - i;
+            sortSuffixes[i] = sa.index(i);
         }
-        Arrays.sort(sortSuffixes);
+        // Arrays.sort(sortSuffixes);
 
     }
 
@@ -35,7 +36,7 @@ public class CircularSuffixArray {
         if (i < 0 || i > length() - 1) {
             throw new IllegalArgumentException();
         }
-        System.out.println("Index : "+sortSuffixes[i]);
+        // System.out.println("Index : "+sortSuffixes[i]);
         return sortSuffixes[i];
     }
 

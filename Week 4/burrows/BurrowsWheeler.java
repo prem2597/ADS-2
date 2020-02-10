@@ -1,9 +1,10 @@
-// import edu.princeton.cs.algs4.StdOut;
-// import edu.princeton.cs.algs4.BinaryStdIn;
-// import edu.princeton.cs.algs4.BinaryStdOut;
+import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.BinaryStdIn;
+import edu.princeton.cs.algs4.BinaryStdOut;
 import java.util.Arrays;
 /**
  * @author Prem
+ * @reference stack overflow and algs4 and geeks for geeks
  */
 public class BurrowsWheeler {
 
