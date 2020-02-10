@@ -34,32 +34,32 @@ public class BurrowsWheeler {
     // apply Burrows-Wheeler inverse transform,
     // reading from standard input and writing to standard output
     public static void inverseTransform() {
-        int x = BinaryStdIn.readInt();
-        String data = BinaryStdIn.readString();
-        char[] a = new char[data.length()];
-        for ( int i = 0; i < data.length(); i ++) {
-            a[i] = data.charAt(i);
-        }
-        int[] next = new int[data.length()];
-        char[] cn = new char[data.length()];
-        int[] count = new int[257];
-        for (int i = 0; i < data.length(); i++) {
-            count[a[i]+1]++;
-        }
-        for (int r = 0; r < 256; r++) {
-            count[r+1] += count[r];
-        }
-        for (int i = 0; i < data.length(); i++) {
-            next[count[a[i]]] = i;
-            cn[count[a[i]]++] = a[i];
-        }
-        int current = x;
-        for (int i = 0; i < data.length(); i++) {
-            BinaryStdOut.write(cn[current]);
-            current = next[current];
-        }
+        // int x = BinaryStdIn.readInt();
+        // String data = BinaryStdIn.readString();
+        // char[] a = new char[data.length()];
+        // for ( int i = 0; i < data.length(); i ++) {
+        //     a[i] = data.charAt(i);
+        // }
+        // int[] next = new int[data.length()];
+        // char[] cn = new char[data.length()];
+        // int[] count = new int[257];
+        // for (int i = 0; i < data.length(); i++) {
+        //     count[a[i]+1]++;
+        // }
+        // for (int r = 0; r < 256; r++) {
+        //     count[r+1] += count[r];
+        // }
+        // for (int i = 0; i < data.length(); i++) {
+        //     next[count[a[i]]] = i;
+        //     cn[count[a[i]]++] = a[i];
+        // }
+        // int current = x;
+        // for (int i = 0; i < data.length(); i++) {
+        //     BinaryStdOut.write(cn[current]);
+        //     current = next[current];
+        // }
 
-        BinaryStdOut.close();
+        // BinaryStdOut.close();
 
     }
 
