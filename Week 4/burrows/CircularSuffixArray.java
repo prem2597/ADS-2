@@ -20,7 +20,7 @@ public class CircularSuffixArray {
         sa = new SuffixArray(s);
         sortSuffixes = new int[length()];
         for (int i = 0; i < length(); i++) {
-            sortSuffixes[i] = sa.index(i);
+            sortSuffixes[i] = (length() - 1) - i;
         }
         // Arrays.sort(sortSuffixes);
 
