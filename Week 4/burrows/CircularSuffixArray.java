@@ -7,46 +7,65 @@ import java.util.Arrays;
  * @refernce stack overflow algs4.
  */
 public class CircularSuffixArray {
-    private String x;
-    private int[]  sortSuffixes;
-    private static SuffixArray sa;
-
+   
+     private int sortSuffixes[];
     // circular suffix array of s
     public CircularSuffixArray(String s) {
         if (s == null) {
             throw new IllegalArgumentException();
         }
-        this.x = s;
-        sa = new SuffixArray(s);
-        sortSuffixes = new int[length()];
-        for (int i = 0; i < length(); i++) {
-            sortSuffixes[i] = (length() - 1) - i;
+   	
+	int n = s.length();
+        Suffix[] suffixes = new Suffix[n];
+        for (int i = 0; i < n; i++)
+            suffixes[i] = new Suffix(s.substring(i)+s.substring(0,i), i);
+        Arrays.sort(suffixes);
+
+        sortSuffixes = new int[n ];
+        for (int i = 0; i < n  ; i++) {
+            sortSuffixes[i] = suffixes[i].index;
         }
-        // Arrays.sort(sortSuffixes);
+ 
 
     }
 
-    // length of s
+ private static class Suffix implements Comparable<Suffix> {
+        private final String text;
+        private final int index;
+
+        private Suffix(String text, int index) {
+            this.text = text;
+            this.index = index;
+        }
+        private int length() {
+            return text.length();
+        }
+        private char charAt(int i) {
+            return text.charAt(i);
+        }
+
+        public int compareTo(Suffix that) {
+            if (this == that) return 0;  // optimization
+            int n = Math.min(this.length(), that.length());
+            for (int i = 0; i < n; i++) {
+                if (this.charAt(i) < that.charAt(i)) return -1;
+                if (this.charAt(i) > that.charAt(i)) return +1;
+            }
+            return this.length() - that.length();
+        }
+
+        public String toString() {
+            return text.substring(index);
+        }
+    }
+
     public int length() {
-        return x.length();
+        return sortSuffixes.length;
     }
 
-    // returns index of ith sorted suffix
     public int index(int i) {
-        if (i < 0 || i > length() - 1) {
-            throw new IllegalArgumentException();
-        }
-        // System.out.println("Index : "+sortSuffixes[i]);
+        if (i < 0 || i >= sortSuffixes.length) throw new IllegalArgumentException();
         return sortSuffixes[i];
-    }
-
-    // unit testing (required)
-    public static void main(String[] args) {
-        String s = "BAABAAABAA";
-        CircularSuffixArray h = new CircularSuffixArray(s);
-        for (int i = 0; i < h.length(); i++) {
-            StdOut.println(sa.index(i));
-    	}
     }
 
 }

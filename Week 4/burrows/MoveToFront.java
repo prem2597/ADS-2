@@ -8,78 +8,50 @@ import edu.princeton.cs.algs4.BinaryStdOut;
  */
 public class MoveToFront {
 
-    private static void toEncode(char[] data, char[] x, int z) {
-        for (int k = 0; k < data.length; k++) {
-            z = 0;
-            while (x[(char) z] != data[k]) {
-                z++;
-            }
-            BinaryStdOut.write((char) z);
-            while ((char) z > 0) {
-                x[(char) z] = x[(char) z - 1];
-                z--;
-            }
-            x[0] = data[k];
-
-        }
-        BinaryStdOut.close();
-    }
-
-    private static void toDecode(char[] data, char[] x, int z) {
-        for (int k = 0; k < data.length; k++) {
-            z = data[k];
-            char m = x[(char) z];
-            BinaryStdOut.write(x[(char) z]);
-
-            while ((char) z > 0) {
-                x[(char) z] = x[(char) z - 1];
-                z--;
-            }
-            x[0] = m;
-
-        }
-        BinaryStdOut.close();
-    }
-
-    // apply move-to-front encoding, reading from standard input and writing to
+     // apply move-to-front encoding, reading from standard input and writing to
     // standard output
     public static void encode() {
-        int z = 0;
         char[] x = new char[256];
         for (int i = 0; i < 256; i++) {
             x[i] = (char) i;
         }
 
         String s = BinaryStdIn.readString();
-        char[] data = new char[s.length()];
         for (char j = 0; j < s.length(); j++) {
-            data[j] = s.charAt(j);
-
-        }
-        
-        toEncode(data, x, z);
-        
-
+	    char data = s.charAt(j);
+            int z = 0;
+            while (x[z] != data) {
+                z++;
+            }
+            BinaryStdOut.write((char) z);
+            while (z > 0) {
+                x[z] = x[z - 1];
+                z--;
+            }
+            x[0] = data;
+        }       
+	BinaryStdOut.close();
     }
 
     // apply move-to-front decoding, reading from standard input and writing to standard output
     public static void decode() {
-        int z = 0;
         char[] x = new char[256];
         for (int i = 0; i < 256; i++) {
             x[i] = (char) i;
         }
 
         String s = BinaryStdIn.readString();
-        char[] data = new char[s.length()];
         for (int j = 0; j < s.length(); j++) {
-            data[j] = s.charAt(j);
-
-        }
-        
-        toDecode(data, x, z);
-        
-
+            int z = s.charAt(j);
+            char m = x[z];
+            BinaryStdOut.write(x[z]);
+            while (z > 0) {
+                x[z] = x[z - 1];
+                z--;
+            }
+            x[0] = m;
+         }    
+	BinaryStdOut.close();
     }
 
     // if args[0] is "-", apply move-to-front encoding
